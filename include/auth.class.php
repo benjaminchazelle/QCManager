@@ -1,68 +1,58 @@
 <?php
 
-require_once("model.inc.php");
 require_once("session.inc.php");
+require_once("database.inc.php");
+require_once("security.class.php");
 
 class Auth{
 	
 	static $REQUIRED = true;
 	static $NOT_REQUIRED = false;
 	
-	private $userEntity = null;
-	
 	public function __construct($requiredAuth = false) {
 		
-		global $_MODEL;	
+		global $_MYSQLI;
+		
 			
-			if(isset($_SESSION["user_id"])) {
-				
-				$userMatchesEntities = $_MODEL->getEntities("user")
-							->where("user_id", "=", $_SESSION["user_id"])
-							->limit(1)
-							->run();
-							
-				if($userMatchesEntities->size == 1)	{
-					
-					$this->userEntity = $userMatchesEntities->results[0]["user"];
-
-				}
-				else {
-					
-					unset($_SESSION["user_id"]);
-				}
+		if(isset($_SESSION["user_id"])) {
 			
-			}
+			$users_exists_result = $_MYSQLI->query("SELECT * FROM user WHERE user_id = ".$_SESSION["user_id"]);
+						
+			if($users_exists_result->num_rows == 1)	{
+				
+				$_SESSION["user_id"] = $users_exists_result->fetch_object()->user_id;
 
-			if($this->userEntity == null && $requiredAuth) {
-				
-				header("Location: login.php");
-				exit;
-				
 			}
+			else {
+				
+				unset($_SESSION["user_id"]);
+			}
+		
+		}
+
+		else if($requiredAuth) {
+			
+			header("Location: login.php");
+			exit;
+			
+		}
 		
 	}
 	
 	public function isLogged() {
-		return isset($_SESSION["user_id"]) && $this->userEntity != null;
+		return isset($_SESSION["user_id"]);
 	}
 	
-	static function login($username, $password) {
+	static function login($email, $password) {
 		
-		global $_MODEL;
+		global $_MYSQLI;
 		
-		$password = sha1("ordre66" . $password);
-		
-		$userMatchesEntities = $_MODEL->getEntities("user")
-					->where("user_email", "=", $username)
-					->andWhere("user_password", "=", $password)
-					->limit(1)
-					->run();
+		$users_matchs_result = $_MYSQLI->query('SELECT * FROM user WHERE user_email = "'.$_MYSQLI->real_escape_string($email).'" AND user_password = "'.Security::CryptPassword($password).'"');
+
 					
-		if($userMatchesEntities->size == 1)	{
+		if($users_matchs_result->num_rows == 1)	{
 			
-			$userEntity = $userMatchesEntities->results[0]["user"];
-			
-			$_SESSION["user_id"] = $userEntity->user_id;
+			$_SESSION["user_id"] = $users_matchs_result->fetch_object()->user_id;
 			
 			return true;
 			
@@ -80,12 +70,7 @@ class Auth{
 		
 	}
 	
-	public function getUser() {
-		
-		return $this->userEntity;
-		
-	}
-	
 };
+
 
 ?>

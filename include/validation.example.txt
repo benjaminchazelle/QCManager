@@ -1,0 +1,46 @@
+$_POST =  array(
+				"user_id" => 15,
+				"user_name" => "raou",
+				"user_email" => "fgfdg@fff.fr"
+			);
+
+$_RULES = array(
+				"user_id" => Validation::$f->Int,
+				"user_name" => Validation::$f->notEmpty_String,
+				"user_email" => Validation::$f->Email
+			);
+
+
+//Exemple 1
+
+$v = new Validation($_POST, array("user_id", "user_name", "user_email"), $_RULES);
+
+if($v->fieldsExists()) {
+
+	if($v->testAll()) {
+		
+		echo "All is OK";
+		
+	}
+	
+	if($v->fail("user_id"))
+		echo "user_id fail";
+
+	if($v->fail("user_email"))
+		echo "user_email fail";
+
+	if($v->fail("user_name"))
+		echo "user_name fail";
+
+
+	}
+			
+			
+	
+//Exemple 2 Inline Request test	
+			
+if((new Validation($_POST, array("user_id", "user_name", "user_email")))->fieldsExists()) {
+	
+	//do something
+
+	}
