@@ -1,0 +1,37 @@
+
+
+
+/login
+	auth(mail, passwd), test passwd
+	
+/register	
+	if(log) go index
+	else
+		inscription yolo (n'importe qui)
+		
+/deconnexion
+	session destroy
+	
+	
+/createForm
+
+
+/deleteForm (reservé owner)
+
+
+
+/getFormStat (reservé owner)
+
+
+
+/getFormAnswers(question et reponse balancé, avec état de réponse actuel)
+
+
+/setChoice
+
+
+/profil  (reservé owner)
+
+	
+	
+	
