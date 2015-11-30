@@ -27,7 +27,6 @@ CREATE TABLE USER
     user_photo_path varchar(255) UNIQUE NOT NULL,
     user_schoolname TEXT NOT NULL,
     user_password char(255) NOT NULL,
-    user_salt char(5),
     PRIMARY KEY (user_id)
 );
 
@@ -98,31 +97,6 @@ DROP FUNCTION IF EXISTS QUESTIONNAIRE_WEIGHTING;
 DROP FUNCTION IF EXISTS GET_POINTS_PER_TRUE_ANSWER_QUESTION;
 DROP FUNCTION IF EXISTS GET_RESULT_STUDENT_QUESTIONNAIRE;
 DROP PROCEDURE IF EXISTS ADD_ANSWER;
-
-delimiter // 
-CREATE FUNCTION CREATE_HASHED_PASSWORD(original_password char(255), salt char(5)) returns char(255)
-BEGIN
-	-- return SHA2(CONCAT(original_password, salt), 224);
-    -- return PASSWORD(CONCAT(original_password, salt));
-    return SHA1(CONCAT(original_password, salt));
-END// 
-delimiter ;
-
--- Return -1 if user couln't be found, his id otherwise
-delimiter // 
-CREATE FUNCTION USER_EXIST(email char(255), password char(255)) returns integer
-BEGIN
-	DECLARE id_user integer DEFAULT -1;
-    
-    SELECT user_id
-    INTO id_user
-    FROM USER
-    WHERE USER.user_email=email
-    AND USER.user_password = CREATE_HASHED_PASSWORD(password, USER.user_salt);
-    
-    return id_user;
-END// 
-delimiter ;
 
 delimiter // 
 CREATE FUNCTION QUESTIONNAIRE_WEIGHTING(questionnaire_id integer) returns float
