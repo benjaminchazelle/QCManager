@@ -148,7 +148,7 @@ class CheckInputIntegrity
 		$result = str_replace(" ", "", $result);
 
 		$result = CheckInputIntegrity::finalizeRegex($result);
-		echo $result."<br>";
+		//echo $result."<br>";
 		
 		$result = preg_match($result, $this->input_text, $matches, PREG_OFFSET_CAPTURE);
 		
