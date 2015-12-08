@@ -1,7 +1,7 @@
 <?php
 
-require("include/auth.class.php");
-require("include/validation.class.php");
+require_once("include/auth.class.php");
+require_once("include/validation.class.php");
 
 $auth = new Auth();
 
