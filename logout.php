@@ -1,6 +1,6 @@
 <?php
 
-require("include/auth.class.php");
+require_once("include/auth.class.php");
 
 Auth::logout();
 
