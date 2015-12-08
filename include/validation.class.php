@@ -112,9 +112,6 @@ Validation::init();
 
 
 
-var_dump(Validation::Query($_GET, array("a", "b", "c")));
-
-
 
 
 ?>

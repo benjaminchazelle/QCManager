@@ -1,7 +1,7 @@
 <?php
 
 require("include/auth.class.php");
-require("include/request.class.php");
+require("include/validation.class.php");
 
 $auth = new Auth();
 
@@ -11,7 +11,7 @@ if($auth->isLogged()) {
 	}
 
 
-if(Request::PostFields(array("email", "password"))) {
+if(Validation::Query($_POST, array("email", "password"))) {
 	
 	if($auth->login($_POST['email'], $_POST['password'])) {
 		header("Location: index.php");
