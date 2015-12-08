@@ -39,7 +39,7 @@ if($v->fieldsExists()) {
 	
 //Exemple 2 Inline Request test	
 			
-if((new Validation($_POST, array("user_id", "user_name", "user_email")))->fieldsExists()) {
+if(Validation::Query($_GET, array("a", "b", "c"))) {
 	
 	//do something
 
