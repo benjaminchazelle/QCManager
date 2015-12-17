@@ -23,7 +23,7 @@ CREATE TABLE USER
     user_firstname TEXT NOT NULL,
     user_lastname TEXT NOT NULL,
     user_email char(255) UNIQUE NOT NULL,
-    user_photo_path varchar(255) UNIQUE NOT NULL,
+    user_photo_path varchar(255) NOT NULL,
     user_schoolname TEXT NOT NULL,
     user_password char(255) NOT NULL,
     PRIMARY KEY (user_id)
