@@ -33,26 +33,24 @@ CREATE TABLE USER
 CREATE TABLE QUESTIONNAIRE
 (
 	questionnaire_id INTEGER AUTO_INCREMENT NOT NULL,
-    questionnaire_professor_user_id INTEGER NOT NULL,
+    questionnaire_user_id INTEGER NOT NULL,
     questionnaire_title TEXT NOT NULL,
     questionnaire_start_date INTEGER UNSIGNED NOT NULL,
     questionnaire_end_date INTEGER UNSIGNED NOT NULL,
     PRIMARY KEY (questionnaire_id),
-    FOREIGN KEY (questionnaire_professor_user_id) REFERENCES USER(user_id)
+    FOREIGN KEY (questionnaire_user_id) REFERENCES USER(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE QUESTION
 (
 	question_id INTEGER AUTO_INCREMENT NOT NULL,
-    questionnaire_id INTEGER NOT NULL,
+    question_questionnaire_id INTEGER NOT NULL,
     question_num INTEGER NOT NULL,
     question_content varchar(255) NOT NULL,
     question_type enum('checkbox','radiobutton') NOT NULL,
     question_weight float NOT NULL DEFAULT 1,
     PRIMARY KEY (question_id),
-    FOREIGN KEY (questionnaire_id) REFERENCES QUESTIONNAIRE(questionnaire_id),
-    CONSTRAINT unique_question UNIQUE(questionnaire_id, question_content),
-	CONSTRAINT unique_question_num UNIQUE(questionnaire_id, question_num)
+    FOREIGN KEY (question_questionnaire_id) REFERENCES QUESTIONNAIRE(questionnaire_id) ON DELETE CASCADE
 );
 
 CREATE TABLE CHOICE
@@ -63,8 +61,7 @@ CREATE TABLE CHOICE
     choice_hint TEXT,
     choice_status BOOLEAN NOT NULL,
     PRIMARY KEY (choice_id),
-    FOREIGN KEY (choice_question_id) REFERENCES QUESTION(question_id),
-    CONSTRAINT unique_answer_question UNIQUE(choice_question_id, choice_content)
+    FOREIGN KEY (choice_question_id) REFERENCES QUESTION(question_id) ON DELETE CASCADE
 );
 
 CREATE TABLE ANSWER
@@ -73,9 +70,8 @@ CREATE TABLE ANSWER
     answer_student_user_id INTEGER NOT NULL,
     answer_choice_id INTEGER NOT NULL,
     PRIMARY KEY (answer_id),
-    FOREIGN KEY (answer_student_user_id) REFERENCES USER(user_id),
-    FOREIGN KEY (answer_choice_id) REFERENCES CHOICE(choice_id),
-    CONSTRAINT unique_answer_student UNIQUE(answer_student_user_id, answer_choice_id)
+    FOREIGN KEY (answer_student_user_id) REFERENCES USER(user_id) ON DELETE CASCADE, 
+    FOREIGN KEY (answer_choice_id) REFERENCES CHOICE(choice_id) ON DELETE CASCADE
 );
 
 
@@ -106,7 +102,7 @@ BEGIN
     SELECT SUM(question_weight)
     INTO weight
     FROM QUESTION
-    WHERE QUESTION.questionnaire_id=questionnaire_id;
+    WHERE QUESTION.question_questionnaire_id=questionnaire_id;
     
     IF(weight IS NULL) THEN
 		return 0;
@@ -151,7 +147,7 @@ BEGIN
 	INNER JOIN QUESTION
 	ON CHOICE.choice_question_id=QUESTION.question_id
 	WHERE ANSWER.answer_student_user_id=_student_id
-	AND QUESTION.questionnaire_id=_questionnaire_id
+	AND QUESTION.question_questionnaire_id=_questionnaire_id
     AND choice_status = true
     AND question_id NOT IN (SELECT question_id
 							FROM ANSWER
@@ -160,7 +156,7 @@ BEGIN
 							INNER JOIN QUESTION
 							ON CHOICE.choice_question_id=QUESTION.question_id
 							WHERE ANSWER.answer_student_user_id=_student_id
-							AND QUESTION.questionnaire_id=_questionnaire_id
+							AND QUESTION.question_questionnaire_id=_questionnaire_id
 							AND choice_status = false);
     
     IF(result IS NULL) THEN
@@ -195,19 +191,19 @@ delimiter ;
 
 
 INSERT INTO USER (user_firstname, user_lastname, user_email, user_photo_path, user_schoolname, user_password)
-VALUES ("prof1_f", "prof1_l", "prof@example.com", "C:\\\\a", "IUT LYON 1", "mdp1"),
+VALUES ("prof1_f", "prof1_l", "prof@example.com", "C:\\\\a", "IUT LYON 1", "20fe3d143653ef86b6c32a85ed24774898e62808"),
 	("elev1_f", "elev1_l", "eleve1@example.com", "C:\\\\b", "IUT LYON 1", "mdp2"),
 	("elev2_f", "elev2_l", "eleve2@example.com", "C:\\\\c", "IUT LYON 1", "mdp3");
     
-INSERT INTO QUESTIONNAIRE (questionnaire_professor_user_id, questionnaire_title, questionnaire_start_date, questionnaire_end_date)
+INSERT INTO QUESTIONNAIRE (questionnaire_user_id, questionnaire_title, questionnaire_start_date, questionnaire_end_date)
 VALUES (1, "Questionnaire test 1", 1448459754, 1448499754);
 
-INSERT INTO QUESTION (questionnaire_id, question_num, question_content, question_type, question_weight)
+INSERT INTO QUESTION (question_questionnaire_id, question_num, question_content, question_type, question_weight)
 VALUES (1, 1, "Couleur du cheval blanc d'Henri IV", "checkbox", 1),
 	(1, 2, "Couleur du cheval noir d'Henri V", "checkbox", 1),
 	(1, 3, "Couleur du cheval rouge d'Henri VI", "checkbox", 1),
     (1, 4, "Couleur possible d'un cheval", "radiobutton", 1),
-    (1, 5, "Couleur d'une pastèque", "radiobutton", 1);
+    (1, 5, "Couleur d'une pastÃ¨que", "radiobutton", 1);
 
 INSERT INTO CHOICE (choice_question_id, choice_content, choice_hint, choice_status)
 VALUES (1, "Noir", null ,false),(1, "Blanc", null, true),(1, "Rouge", null, false),
