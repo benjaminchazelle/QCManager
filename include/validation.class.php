@@ -29,7 +29,11 @@ class Validation {
 	
 	private $die;
 	
-	public function __construct($source, $requiredFields, $rules=array(), $die=true) {
+	private $fields;
+	
+	public function __construct($source, $requiredFields, $rules=array(), $die=false) {
+		
+		$this->fields = array();
 		
 		if(count($rules) == 0)
 			$die = false;
@@ -47,6 +51,8 @@ class Validation {
 				if(isset($rules[$k])){
 					if($rules[$k]($source[$k])) {
 						$this->fieldsValidity[$k] = 1;
+						$this->fields[$k] = $source[$k];
+						
 					}
 					else {
 						$this->fieldsValidity[$k] = 0;
@@ -90,6 +96,26 @@ class Validation {
 	
 	public function fieldsExists() {
 		return $this->fieldsExists;
+	}
+	
+	public function export($includeFields, $otherFields = array()) {
+		
+		$fields =  array();
+		
+		foreach($includeFields as $f) {
+
+			if(isset($this->fields[$f]))
+				$fields[$f] = $this->fields[$f];
+		}
+		
+		foreach($otherFields as $f => $v) {
+
+			$fields[$f] = $v;
+		}
+		
+		
+		
+		return $fields;
 	}
 	
 	

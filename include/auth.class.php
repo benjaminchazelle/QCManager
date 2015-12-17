@@ -43,16 +43,32 @@ class Auth{
 		return isset($_SESSION["user_id"]);
 	}
 	
+	static function user_exists($email, $password = null) {
+		
+		global $_MYSQLI;
+		
+		$query = 'SELECT * FROM user WHERE user_email = "'.$_MYSQLI->real_escape_string($email).'"';
+
+		if(!is_null($password))
+			$query .=' AND user_password = "'.Security::CryptPassword($password).'"';
+		
+		$users_matchs_result = $_MYSQLI->query($query);
+		
+		if($users_matchs_result->num_rows == 1)
+			return $users_matchs_result->fetch_object()->user_id;
+		else
+			return 0;
+	}
+	
 	static function login($email, $password) {
 		
 		global $_MYSQLI;
 		
-		$users_matchs_result = $_MYSQLI->query('SELECT * FROM user WHERE user_email = "'.$_MYSQLI->real_escape_string($email).'" AND user_password = "'.Security::CryptPassword($password).'"');
-
-					
-		if($users_matchs_result->num_rows == 1)	{
+		$user_id = Auth::user_exists($email, $password);
+		
+		if($user_id > 0)	{
 			
-			$_SESSION["user_id"] = $users_matchs_result->fetch_object()->user_id;
+			$_SESSION["user_id"] = $user_id;
 			
 			return true;
 			
