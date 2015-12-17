@@ -16,15 +16,14 @@ DROP TABLE IF EXISTS CHOICE;
 DROP TABLE IF EXISTS ANSWER;
 
 -- reparer
-
--- Insert unhashed password, and no salt
+	
 CREATE TABLE USER
 (
 	user_id INTEGER AUTO_INCREMENT NOT NULL,
     user_firstname TEXT NOT NULL,
     user_lastname TEXT NOT NULL,
     user_email char(255) UNIQUE NOT NULL,
-    user_photo_path varchar(255) UNIQUE NOT NULL,
+    user_photo_path varchar(255) NOT NULL,
     user_schoolname TEXT NOT NULL,
     user_password char(255) NOT NULL,
     PRIMARY KEY (user_id)
@@ -48,6 +47,7 @@ CREATE TABLE QUESTION
     question_num INTEGER NOT NULL,
     question_content varchar(255) NOT NULL,
     question_type enum('checkbox','radiobutton') NOT NULL,
+	question_hint TEXT,
     question_weight float NOT NULL DEFAULT 1,
     PRIMARY KEY (question_id),
     FOREIGN KEY (question_questionnaire_id) REFERENCES QUESTIONNAIRE(questionnaire_id) ON DELETE CASCADE
@@ -58,7 +58,6 @@ CREATE TABLE CHOICE
 	choice_id INTEGER AUTO_INCREMENT NOT NULL,
     choice_question_id INTEGER NOT NULL,
     choice_content varchar(255) NULL,
-    choice_hint TEXT,
     choice_status BOOLEAN NOT NULL,
     PRIMARY KEY (choice_id),
     FOREIGN KEY (choice_question_id) REFERENCES QUESTION(question_id) ON DELETE CASCADE
@@ -191,37 +190,33 @@ delimiter ;
 
 
 INSERT INTO USER (user_firstname, user_lastname, user_email, user_photo_path, user_schoolname, user_password)
-VALUES ("prof1_f", "prof1_l", "prof@example.com", "C:\\\\a", "IUT LYON 1", "20fe3d143653ef86b6c32a85ed24774898e62808"),
-	("elev1_f", "elev1_l", "eleve1@example.com", "C:\\\\b", "IUT LYON 1", "mdp2"),
-	("elev2_f", "elev2_l", "eleve2@example.com", "C:\\\\c", "IUT LYON 1", "mdp3");
+VALUES ("Jean", "Mirandau", "jean-mirandau@example.com", "C:\\\\a", "IUT LYON 1", "20fe3d143653ef86b6c32a85ed24774898e62808"), -- 'mdp1'
+	("Tom", "Edgerie", "tom.edgerie@example.com", "C:\\\\b", "IUT LYON 1", "b364a56350e8067999a9c67da232be483f605697"), -- 'mdp2'
+	("Maria", "Rodriguez", "maria.rodriguez@example.com", "C:\\\\c", "IUT LYON 1", "78eb459c70acb7b4c94cd653107b0ffe683095e1"); -- 'mdp3'
     
 INSERT INTO QUESTIONNAIRE (questionnaire_user_id, questionnaire_title, questionnaire_start_date, questionnaire_end_date)
-VALUES (1, "Questionnaire test 1", 1448459754, 1448499754);
+VALUES (1, "Questionnaire test 1", 1450339471, 1481961871 );
 
-INSERT INTO QUESTION (question_questionnaire_id, question_num, question_content, question_type, question_weight)
-VALUES (1, 1, "Couleur du cheval blanc d'Henri IV", "checkbox", 1),
-	(1, 2, "Couleur du cheval noir d'Henri V", "checkbox", 1),
-	(1, 3, "Couleur du cheval rouge d'Henri VI", "checkbox", 1),
-    (1, 4, "Couleur possible d'un cheval", "radiobutton", 1),
-    (1, 5, "Couleur d'une pastèque", "radiobutton", 1);
+INSERT INTO QUESTION (question_questionnaire_id, question_num, question_content, question_type, question_hint, question_weight)
+VALUES (1, 1, "Quel est l'aliment qui n'est pas un légume ?", "checkbox", "Il est rouge !", 2),
+		(1, 2, "Quelles sont les couleurs possibles d'un cheval ?", "radiobutton", null, 1),
+        (1, 3, "Quel mot est bien orthographé ?", "checkbox", null, 1),
+        (1, 4, "La taille d'une molécule d'eau est de l'odre de : ", "checkbox", "Elle est toute petite !", 3);
 
-INSERT INTO CHOICE (choice_question_id, choice_content, choice_hint, choice_status)
-VALUES (1, "Noir", null ,false),(1, "Blanc", null, true),(1, "Rouge", null, false),
-	(2, "Noir", null, true),(2, "Bleu", null, false),(2, "Violet", null, false),
-    (3, "Noir", null, false),(3, "Blanc", null, false),(3, "Rouge", null, true),
-    (4, "Jaune", null, true),(4, "Blanc", null, true),(4, "Rouge", null, false),
-    (5, "Noir", null, false),(5, "Blanc", null, false),(5, "Rouge", null, true),(5, "Vert", null, true);
+INSERT INTO CHOICE (choice_question_id, choice_content, choice_status)
+VALUES (1, "Tomate", true),(1, "Carotte", false),(1, "Potiron", false), (1, "Choux-fleur", false),
+		(2, "Noir", true),(2, "Rose", false),(2, "Brun", true),(2, "Bleu", false),
+        (3, "Ellocution", false),(3, "Elocution", true),(3, "Elocusion", false),(3, "Elokution", false),
+        (4, "0.0001 mm", false),(4, "1mm", false),(4, "0.1 mm", false),(4, "0.000001mm ", true);
 
 INSERT INTO ANSWER (answer_student_user_id, answer_choice_id)
-VALUES (2, 4), (2, 5), (2, 10), (2,11), (2,15),(2,16),
-	(3, 2),(3, 4), (3, 10), (3,11),(3,16);
+VALUES (2, 1), (2, 7), (2, 16),
+	(3, 1),(3, 5), (3, 7), (3, 10),(3,16);
 
 
-SELECT GET_RESULT_STUDENT_QUESTIONNAIRE(2, 1);
-CALL ADD_ANSWER(2, 2, "Noir", true);
-SELECT GET_RESULT_STUDENT_QUESTIONNAIRE(2, 1);
 
-    
-    
-    
+-- PB with next functions
+-- SELECT GET_RESULT_STUDENT_QUESTIONNAIRE(2, 1);
+-- SELECT GET_RESULT_STUDENT_QUESTIONNAIRE(3, 1);
+-- SELECT QUESTIONNAIRE_WEIGHTING(1);
     
