@@ -1,5 +1,7 @@
 <?php
 
+header("Content-type: text/plain");
+
 class Ajax {
 	
 	private $time;
@@ -42,7 +44,7 @@ class Ajax {
 						"data" => $this->data
 		);
 		
-		echo json_encode($obj);
+		echo json_encode($obj, JSON_PRETTY_PRINT);
 		
 	}
 	

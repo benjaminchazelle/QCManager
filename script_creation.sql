@@ -190,9 +190,9 @@ delimiter ;
 
 
 INSERT INTO USER (user_firstname, user_lastname, user_email, user_photo_path, user_schoolname, user_password)
-VALUES ("Jean", "Mirandau", "jean-mirandau@example.com", "C:\\\\a", "IUT LYON 1", "20fe3d143653ef86b6c32a85ed24774898e62808"), -- 'mdp1'
-	("Tom", "Edgerie", "tom.edgerie@example.com", "C:\\\\b", "IUT LYON 1", "b364a56350e8067999a9c67da232be483f605697"), -- 'mdp2'
-	("Maria", "Rodriguez", "maria.rodriguez@example.com", "C:\\\\c", "IUT LYON 1", "78eb459c70acb7b4c94cd653107b0ffe683095e1"); -- 'mdp3'
+VALUES ("Jean", "Mirandau", "jean-mirandau@example.com", "C:\\\\a", "IUT LYON 1", "20fe3d143653ef86b6c32a85ed24774898e62808"),
+	("Tom", "Edgerie", "tom.edgerie@example.com", "C:\\\\b", "IUT LYON 1", "b364a56350e8067999a9c67da232be483f605697"),
+	("Maria", "Rodriguez", "maria.rodriguez@example.com", "C:\\\\c", "IUT LYON 1", "78eb459c70acb7b4c94cd653107b0ffe683095e1");
     
 INSERT INTO QUESTIONNAIRE (questionnaire_user_id, questionnaire_title, questionnaire_start_date, questionnaire_end_date)
 VALUES (1, "Questionnaire test 1", 1450339471, 1481961871 );

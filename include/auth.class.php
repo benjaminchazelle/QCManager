@@ -86,6 +86,13 @@ class Auth{
 		
 	}
 	
+	static function getUserId() {
+		if(isset($_SESSION["user_id"]))
+			return $_SESSION["user_id"];
+		else
+			return 0;
+	}
+	
 };
 
 
