@@ -31,7 +31,7 @@ if($v->fieldsExists()) {
 	
 	if($v->testAll() && $email_available) {
 				
-		$set = $v->export(array("user_firstname", "user_lastname", "user_email", "user_schoolname", "user_password"));		
+		$set = $v->export($_MYSQLI, array("user_firstname", "user_lastname", "user_email", "user_schoolname", "user_password"));		
 
 		if(false)
 			$set["user_photo_path"] = "";

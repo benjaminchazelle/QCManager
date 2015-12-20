@@ -40,7 +40,7 @@ if($v->fieldsExists()) {
 		$statement = new SQLBuilder($_MYSQLI);
 		
 		$q = $statement->insertInto('user')
-				->set($v->export(array("user_firstname", "user_lastname", "user_email", "user_schoolname", "user_password"), array("user_photo_path" => "")))
+				->set($v->export($_MYSQLI, array("user_firstname", "user_lastname", "user_email", "user_schoolname", "user_password"), array("user_photo_path" => "")))
 				->build();
 		
 		$r = $_MYSQLI->query($q);
