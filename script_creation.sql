@@ -34,6 +34,7 @@ CREATE TABLE QUESTIONNAIRE
 	questionnaire_id INTEGER AUTO_INCREMENT NOT NULL,
     questionnaire_user_id INTEGER NOT NULL,
     questionnaire_title TEXT NOT NULL,
+    questionnaire_description TEXT NOT NULL,
     questionnaire_start_date INTEGER UNSIGNED NOT NULL,
     questionnaire_end_date INTEGER UNSIGNED NOT NULL,
     PRIMARY KEY (questionnaire_id),
