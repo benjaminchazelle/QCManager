@@ -11,18 +11,7 @@ if($auth->isLogged()) {
 	header("Location: index.php");
 	exit;
 	}
-	
-		Validation::$f->{"bool_Int"} = function ($d) { return $d == 0 || $d == 1; };	
-		Validation::$f->{"not_Null"} = function ($d) { return !is_null($d); };	
-		Validation::$f->{"unsigned_Int"} = function ($d) { return is_numeric($d) && ($d%1 == 0) && $d >= 0; };	
-		Validation::$f->{"Int"} = function ($d) { return is_numeric($d) && ($d%1 == 0); };	
-		Validation::$f->{"Number"} = function ($d) { return is_numeric($d); };	
-		Validation::$f->{"notEmpty_String"} = function ($d) { return strlen($d) > 0; };	
-		Validation::$f->{"datetime"} = function ($d) { DateTime::createFromFormat('Y-m-d H:i:s', $d) != false; };	
-		Validation::$f->{"Email"} = function ($d) { return filter_var($d, FILTER_VALIDATE_EMAIL); };	
-		Validation::$f->{"Timestamp"} = Validation::$f->Int;	
-		Validation::$f->{"anterior_Timestamp"} = function ($d) { return $d < time(); };	
-		Validation::$f->{"posterior_Timestamp"} = function ($d) { return $d > time(); };	
+
 
 
 $_RULES = array(
@@ -46,7 +35,7 @@ if($v->fieldsExists()) {
 	
 	if($v->testAll() && $repassword && $email_available) {
 		
-		$users_matchs_result = $_MYSQLI->query('SELECT * FROM user WHERE user_email = "'.$_MYSQLI->real_escape_string($_POST["user_email"]).'"');
+		// $users_matchs_result = $_MYSQLI->query('SELECT * FROM user WHERE user_email = "'.$_MYSQLI->real_escape_string($_POST["user_email"]).'"');
 		
 		$statement = new SQLBuilder($_MYSQLI);
 		

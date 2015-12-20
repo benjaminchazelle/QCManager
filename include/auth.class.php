@@ -93,6 +93,20 @@ class Auth{
 			return 0;
 	}
 	
+	static function getUser() {
+		
+		global $_MYSQLI;
+		
+		$user_result = $_MYSQLI->query('SELECT * FROM user WHERE user_id = ' . Auth::getUserId());
+		
+		if($user_result->num_rows == 0) {
+			header("Location: logout.php");
+			exit;
+		}
+		
+		return $user_result->fetch_object();
+	}
+	
 };
 
 
