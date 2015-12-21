@@ -2,6 +2,7 @@
 
 require_once("include/auth.class.php");
 require_once("include/validation.class.php");
+require_once("include/security.class.php");
 require_once("include/database.inc.php");
 require_once("include/sqlbuilder.class.php");
 
@@ -24,13 +25,22 @@ $_RULES = array(
 			);
 			
 $v = new Validation($_POST, array("user_firstname", "user_lastname", "user_email", "user_schoolname", "user_password", "user_repassword"), $_RULES);
-			
+$email_available = true;	
+$error = "";
+$repassword = true;
+
 if($v->fieldsExists()) {
 
 	$repassword = $_POST["user_password"] == $_POST["user_repassword"];
 	
 	$email_available = Auth::user_exists($_POST["user_email"]) == 0;
 
+	if(!$email_available)
+		$error = "E-Mail non disponible";
+	else if(!$repassword)
+		$error = "Les mots de passe ne correspondent pas";
+	else
+		$error = "Champs invalides";
 	
 	
 	if($v->testAll() && $repassword && $email_available) {
@@ -40,57 +50,47 @@ if($v->fieldsExists()) {
 		$statement = new SQLBuilder($_MYSQLI);
 		
 		$q = $statement->insertInto('user')
-				->set($v->export($_MYSQLI, array("user_firstname", "user_lastname", "user_email", "user_schoolname", "user_password"), array("user_photo_path" => "")))
+				->set($v->export($_MYSQLI, array("user_firstname", "user_lastname", "user_email", "user_schoolname"), array("user_photo_path" => "", "user_password" => Security::CryptPassword($_POST["user_password"]))))
 				->build();
 		
 		$r = $_MYSQLI->query($q);
-		var_dump($_MYSQLI);
 		
-		print_r($r);
+		Auth::login($_POST["user_email"], $_POST["user_password"]);
+		
+		header("Location: index.php");
+		exit;
 	}
-	
-	if($v->fail("user_firstname"))
-		echo "user_firstname fail";
-
-	if($v->fail("user_lastname"))
-		echo "user_lastname fail";
-	
-	if($v->fail("user_schoolname"))
-		echo "user_schoolname fail";
-
-	if($v->fail("user_email"))
-		echo "user_email fail";
-
-	if($v->fail("user_password"))
-		echo "user_password fail";
-	
-	if($v->fail("user_repassword") && $repassword)
-		echo "user_repassword fail";
-	
-	if(!$email_available)
-		echo "email unavailable";
 
 	}
 
 	
 ?>
-<form action="" method="post">
+<!DOCTYPE html>
+<html>
 
-
-	fn<input type="text" name="user_firstname" />
-	<br />
-	ln<input type="text" name="user_lastname" />
-	<br />
-	em<input type="text" name="user_email" />
-	<br />
-	sn<input type="text" name="user_schoolname" />
-	<br />
-	pw<input type="password" name="user_password" />
-	<br />
-	rpw<input type="password" name="user_repassword" />
-	<br />
+	<head>
+		<meta charset="utf-8" />
+		<title>QCManager</title>
+		<link rel="stylesheet" type="text/css" href="css/auth.css">
+	</head>
 	
-	<input type="submit" name="Envoyer" />
-
-</form>
-
+	<body>
+		<div class="login">
+			<div class="login-top"><span>QCManager</span></div>
+			<h1>Inscrivez-vous</h1>
+			<div class="label"><?php echo $error; ?></div>
+			<div class="login-bottom">
+				<form method="post">
+					<input name="user_firstname" <?php if($v->fail("user_firstname")) echo 'class="error"'; ?> placeholder="Nom" type="text">
+					<input name="user_lastname" <?php if($v->fail("user_lastname")) echo 'class="error"'; ?> placeholder="Prénom" type="text">
+					<input name="user_email" <?php if($v->fail("user_email") || !$email_available) echo 'class="error"'; ?> placeholder="Adresse e-mail" type="text">
+					<input name="user_schoolname" <?php if($v->fail("user_schoolname")) echo 'class="error"'; ?> placeholder="Établissement" type="text">
+					<input name="user_password" <?php if($v->fail("user_password")) echo 'class="error"'; ?> placeholder="Mot de passe" type="password">	
+					<input name="user_repassword" <?php if($v->fail("user_repassword") || !$repassword) echo 'class="error"'; ?> placeholder="Veuillez retaper le mot de passe" type="password">	
+					<input value="Inscription" type="submit">
+				</form>
+			</div>
+			<div class="footer"><a href="login.php">Vous avez déjà un compte ? Connectez vous !</a></div>
+		</div>
+	</body>
+</html>

@@ -63,9 +63,11 @@ body{
 
 .label{
 	text-align:center;
-	margin-top: -18px;
+	font-weight:bold;
 	margin-bottom: 18px;
 	color:red;
+	font-size:18px;
+	
 }
 
 .login-bottom input{
@@ -82,13 +84,8 @@ body{
 	margin-bottom:20px !important;
 }*/
 
-.login-bottom input[type="password"] {
-    margin-bottom:10px;
-}
 
-.password {
-    margin: 28.5px 0px;
-}
+
 
 .login-bottom input[type="submit"] {
     width: 173px;
@@ -99,6 +96,11 @@ body{
     margin: 0px auto;
     display: block;
 	transition:background 0.3s;
+	margin-top:10px;
+}
+
+.error {
+	border: 1px solid red !important;
 }
 
 .login-bottom input[type="submit"]:hover {
