@@ -1,0 +1,224 @@
+body{
+margin:0;
+line-height: 50px;
+font-family: 'Karla', sans-serif;
+font-size:20px;
+}
+
+a{
+text-decoration: none;
+}
+
+hr{
+color: #FFF;
+}
+
+#maincontainer{
+width: 100%; /*Largeur du container principal*/
+margin: 0 auto; /*centre le container principal sur la page*/
+
+}
+
+#banner{
+background: #FEFEFE;
+height: 67px; /*Hauteur de banderolle*/
+border-bottom: solid #D9DEE3 1px;
+}
+
+#contentwrapper{
+float: left;
+width: 100%;
+height:1000px;
+}
+
+#contentcolumn{
+margin-left: 15%; /*Marge container. Censé être (RightColumnWidth + LeftColumnWidth)*/
+text-align: center;
+margin-top:40px;
+padding:50px;
+font-size:22px;
+}
+
+#leftcolumn{
+float: left;
+width: 15%; /*Hauteur de la colonne de gauche*/
+margin-left: -100%; /*Censé être -(MainContainerWidth)*/
+background: #FFFFFF;
+height:1000px;
+border-right: solid #D9DEE3 1px;
+}
+
+
+#footer{
+clear: left;
+width: 100%;
+padding: 0;
+}
+
+.text{
+margin: 10px; /*Marges des textes de chaque colonne (pour créer un padding)*/
+margin-top: 0;
+}
+
+#logo{
+float: left;
+background: #2196F3 url("img/logo.png") no-repeat center center;
+background-size:contain;
+width: 15%;
+height: 67px;
+}
+#logo span{
+visibility:hidden;
+}
+
+#searchBar{
+float: left;
+width: 29.95%;
+padding-top: 8px;
+padding-bottom: 9px;
+border-right: solid #D9DEE3 1px;
+border-left: solid #D9DEE3 1px;
+text-align: center;
+background-color: #F2F5F8;
+}
+
+#title{
+padding-top:10px;
+text-align: center;
+font-weight: 700;
+}
+
+#searchfield{
+padding: 11px;
+border:0;
+width:90%;
+}
+
+#text ul{
+list-style: none;
+}
+
+#text ul li a{
+color: #666666;
+font-weight: 600;
+margin-left:-15px;
+}
+
+#text ul li a img{
+width: 45px;
+height: 45px;
+border-radius: 150px;
+-webkit-border-radius: 150px;
+-moz-border-radius: 150px;
+vertical-align: middle;
+}
+
+#text ul li:first-child a{
+
+font-weight: 700;
+color: #333333;
+}
+
+#text ul li:last-child {
+margin-top: 60px;
+}
+
+#text #author{
+color: #333333;
+font-weight: 700;
+margin-left: 20px;
+width: 170px;
+margin-bottom:3px;
+}
+
+#text #description{
+color: #666666;
+margin-left: 20px;
+margin-bottom: 200px;
+width:170px;
+line-height: 20px;
+}
+
+#text #progressinfo{
+color: #333333;
+line-height: 20px;
+text-align:center;
+}
+
+#text #progressbar img{
+width: 80%;
+height: 7px;
+margin-left: 30px;
+}
+
+#text #time{
+color: #666666;
+line-height: 20px;
+text-align:center;
+}
+
+.question #num{
+color: #333333;
+padding: 2.5% 0;
+border-bottom: solid #AAAAAA 1px;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+margin: 0 25px;
+}
+
+#leftcolumn #text hr{
+width: 80%;
+text-align:center;
+}
+
+#questionnumber{
+float:right;
+font-weight: normal;
+}
+
+#questiontitle{
+font-weight:400;
+}
+
+#questionchoices {
+clear:both;
+margin-top: 50px;
+line-height:30px;
+
+}
+
+#indice{
+text-align: justify;
+margin: 25px 50px;
+font-weight:700;
+color:#666666;
+cursor: pointer;
+}
+
+#indice_content{
+font-style:italic;
+color:#666;
+}
+
+#btn {
+background: #2196F3;
+border-radius: 3px;
+font-family: Arial;
+color: #ffffff;
+font-size: 18px;
+padding: 4px 6px;
+text-decoration: none;
+border:0;
+margin-top: 50px;
+cursor:pointer;
+}
+
+#btn:hover {
+background: #3cb0fd;
+text-decoration: none;
+}
+
+table tr:lastchild{
+text-align:center;	
+}

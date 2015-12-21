@@ -1,0 +1,120 @@
+@font-face {
+  font-family: 'Karla';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Karla'), local('Karla-Regular'), url(../font/KarlaRegular.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Karla';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Karla Bold'), local('Karla-Bold'), url(../font/KarlaBold.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Karla';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Karla Italic'), local('Karla-Italic'), url(../font/KarlaItalic.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Karla';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Karla Bold Italic'), local('Karla-BoldItalic'), url(../font/KarlaBoldItalic.woff2) format('woff2');
+}
+
+body{
+    margin: 40px 0 0;
+	background: #eceff1;
+	font-family: "Karla",sans-serif;
+}
+
+.login {
+    width: 384px;
+    margin: 0px auto;
+    background: #fff none repeat scroll 0% 0%;
+    padding: 48px;
+	padding-bottom:20px;
+    position: relative;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.login-top {
+    background: #2196F3 url("../media/static/logo.png") no-repeat center center;
+    position: absolute;
+    width: 384px;
+    top: 0;
+	left: 0;
+	padding: 35px 48px;
+    text-align: center;
+}
+
+.login-top span{
+	display:none;
+}
+
+.login h1 {
+    text-align: center;
+    font-size: 32px;
+    margin: 32px 0;
+    color: #555;
+	padding-top:20px;
+}
+
+.label{
+	text-align:center;
+	margin-top: -18px;
+	margin-bottom: 18px;
+	color:red;
+}
+
+.login-bottom input{
+    font-size: 19px;
+    width: 338px;
+    padding: 11.5px 19px;
+	margin:3px 0;
+    background: #FFF none repeat scroll 0% 0%;
+	border: 1px solid #ddd;
+	font-family: "Karla",sans-serif;
+}
+/*
+.repassword{
+	margin-bottom:20px !important;
+}*/
+
+.login-bottom input[type="password"] {
+    margin-bottom:10px;
+}
+
+.password {
+    margin: 28.5px 0px;
+}
+
+.login-bottom input[type="submit"] {
+    width: 173px;
+    border: medium none;
+    background: #2196F3 none repeat scroll 0% 0%;
+    color: #F2F5F8;
+    cursor: pointer;
+    margin: 0px auto;
+    display: block;
+	transition:background 0.3s;
+}
+
+.login-bottom input[type="submit"]:hover {
+    background: #3cb0fd;
+	text-decoration: none;
+}
+
+.footer{
+	text-align:center;
+	padding-top:25px;
+}
+
+.footer a{
+	color: #555;
+}
+
+.footer a:hover{
+	text-decoration: none;
+}
