@@ -68,6 +68,7 @@ hr {
     right: 0;
     top: 68px;
     transition: opacity 0.5s ease 0s;
+	width: 199px;
 }
 
 #menucolumn {
