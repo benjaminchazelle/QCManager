@@ -40,7 +40,7 @@ if($v->fieldsExists()) {
 	else if(!$repassword)
 		$error = "Les mots de passe ne correspondent pas";
 	else
-		$error = "Champs invalides";
+		$error = "Champ(s) invalide(s)";
 	
 	
 	if($v->testAll() && $repassword && $email_available) {
