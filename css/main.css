@@ -49,14 +49,7 @@ hr {
 	height:100%;
 }
 
-#banner {
-	background: #fefefe;
-	height: 67px;
-	position:absolute;
-	top:0;
-	left:0;
-	right:0;
-}
+
 
 #menu_items{
     bottom: 0;
@@ -157,12 +150,12 @@ hr {
 }
 
 #searchfield > input {
-    border: 0 none;
+    border: 1px solid #d9dee3;
     padding: 10px;
     width: 100%;
 	font-weight:bold;
 	color: #37474f;
-		font-size: 15px;
+	font-size: 15px;
 }
 
 #menu {
@@ -184,6 +177,10 @@ hr {
     color: #37474f;
     display: inline-block;
     font-weight: bold;
+	transition: color 0.1s;
+}
+#menu ul li a:hover {
+    color: #90a4ae;
 }
 
 
@@ -249,7 +246,7 @@ hr {
 #questions li {
 	margin: 0 20px;
 	color: #333333;
-	padding: 15px 0;
+	padding: 8.5px 0;
 	border-bottom: solid #AAAAAA 1px;
 	white-space: nowrap;
 	overflow: hidden;
@@ -281,12 +278,17 @@ hr {
 	font-weight:700;
 	color:#37474f;
 	cursor: pointer;
+
 }
 
 #indice_content{
 	font-style:italic;
 	color:#666;
+	display:none;
+	opacity:0;
 }
+
+
 
 #btn {
 	font-size: 18px;
@@ -305,7 +307,7 @@ hr {
 	text-decoration: none;
 }
 
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 960px) {
  .responsive #menucolumn, .responsive #logo {
 	  width:30px;
   }
@@ -315,7 +317,6 @@ hr {
   }
    .responsive #menu_items {
 	  opacity:0.3;
-	  overflow-y: hidden;
   }
   
   .responsive #questionscolumn {

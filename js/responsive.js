@@ -1,3 +1,9 @@
+/*$.fn.slideFadeToggle  = function(speed, easing, callback) {
+        this.animate({opacity: 'toggle', height: 'toggle'});
+        return this.animate({opacity: 'toggle', height: 'toggle'}, speed, easing, callback);
+}; */
+
+
 $(".responsive #menucolumn").hover(function () {
 
 	if($("#menucolumn").data("state") != "on") {
@@ -5,7 +11,8 @@ $(".responsive #menucolumn").hover(function () {
 		
 		$("#menucolumn, #logo").css("width", "199px");
 		$("#menu_items").css("opacity", "1");
-		$("#menu_items").css("overflow-y", "auto");
+		
+		$("#logo").css("background-image", "url(media/static/logo.png)");
 
 		$("#questionscolumn, #searchBar").css("left", "200px");
 		$("#questionscolumn").css("box-shadow", "none");
@@ -15,7 +22,8 @@ $(".responsive #menucolumn").hover(function () {
 		
 		$("#menucolumn, #logo").css("width", "");
 		$("#menu_items").css("opacity", "");
-		$("#menu_items").css("overflow-y", "");
+		
+		$("#logo").css("background-image", "");
 
 		$("#questionscolumn, #searchBar").css("left", "");
 		$("#questionscolumn").css("box-shadow", "");

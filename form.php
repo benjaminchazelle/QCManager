@@ -76,7 +76,7 @@
 						<input type="radio" name="group1" value="Choice3"> 1 bar = 108 N.m².s² <br>
 					</form>
 					<div id="indice">► Indice</div>
-					<div id="indice_content" style="opacity:0; display:none">
+					<div id="indice_content" style="">
 					Coucou
 					</div>
 					<input type="submit" form="QuestionChoices" value="Sauvegarder" id="btn"></button>
@@ -101,23 +101,30 @@
 	</body>
 	
 	<script>
+	
 		hint=false;
+		
 		$('#indice').click( function() { // Au clic sur un élément
-			if(!hint){
-				$("#indice_content").css("display", "block");
-				$("#indice_content").animate({"opacity":1});// chache ou affiche a une vitesse constante (400)
-				$('#indice').html("▼ Indice");
-				
+		
+			// $("#indice_content").animate({opacity: 'toggle', height: 'toggle'}, 4000);
+			
+		
+			if(!hint) {
+				$("#indice_content").animate({height: 'toggle'}, 300).animate({opacity: '1'}, 300);
+				$('#indice').html("▼ Indice");				
 			}
-			else{
-				$("#indice_content").animate({"opacity":0}, function(){
-					$(this).css("display", "none");
-				});// chache ou affiche a une vitesse constante (400)
-				$('#indice').html("► Indice");
+
+			else {
+				$("#indice_content").animate({opacity: '0'}, 300).animate({height: 'toggle'}, 300);
+				$('#indice').html("► Indice");				
 			}
-			hint=!hint;
+
+			
+			hint = !hint;
 			
 		});
+		
+
 	</script>
 	<script src="js/responsive.js"></script>
 	
