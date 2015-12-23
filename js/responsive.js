@@ -1,9 +1,3 @@
-/*$.fn.slideFadeToggle  = function(speed, easing, callback) {
-        this.animate({opacity: 'toggle', height: 'toggle'});
-        return this.animate({opacity: 'toggle', height: 'toggle'}, speed, easing, callback);
-}; */
-
-
 $(".responsive #menucolumn").hover(function () {
 
 	if($("#menucolumn").data("state") != "on") {
@@ -29,8 +23,5 @@ $(".responsive #menucolumn").hover(function () {
 		$("#questionscolumn").css("box-shadow", "");
 
 	}
-	
-
-
 
 });

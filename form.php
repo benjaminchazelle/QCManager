@@ -23,9 +23,8 @@
 			<div class="padder">
 				<ul>
 					<li><a href=""><img src="media/user/mobi.png" />Mobi</a></li>
-					<li><a href="">Créer</a></li>
-					<li><a href="">Mes QCM</a></li>
-					<li><a href="">Mes Réponses</a></li>
+					<li><a href="">Tableau de bord</a></li>
+					<li><a href="">Créer un QCM</a></li>
 					<li><a href="">Déconnexion</a></li>
 				</ul>
 				<hr/>
@@ -45,30 +44,17 @@
 					<input type="text"  placeholder="Chercher une question..." />
 				</div>
 			</div>
-			<ul id="questions">
-					<li>Quelle est la couleur du cheval bleu d'Henry IV ?</li>
-					<li>Quelle est la réponse à l'univers, à la vie, mais également à tout ce qui l'entoure, à savoir les pinguins, les hippopotames, mais aussi les robots ménagers ?</li>
-					<li>What is love ?</li>
-					<li>As tu apprécié ce QCM ?</li>
-					<li>Quelle est la couleur du cheval bleu d'Henry IV ?</li>
-					<li>Quelle est la réponse à l'univers, à la vie, mais également à tout ce qui l'entoure, à savoir les pinguins, les hippopotames, mais aussi les robots ménagers ?</li>
-					<li>What is love ?</li>
-					<li>As tu apprécié ce QCM ?</li>
-					<li>Quelle est la couleur du cheval bleu d'Henry IV ?</li>
-					<li>Quelle est la réponse à l'univers, à la vie, mais également à tout ce qui l'entoure, à savoir les pinguins, les hippopotames, mais aussi les robots ménagers ?</li>
-					<li>What is love ?</li>
-					<li>As tu apprécié ce QCM ?</li>
-					<li>Quelle est la couleur du cheval bleu d'Henry IV ?</li>
-					<li>Quelle est la réponse à l'univers, à la vie, mais également à tout ce qui l'entoure, à savoir les pinguins, les hippopotames, mais aussi les robots ménagers ?</li>
-					<li>What is love ?</li>
-					<li>As tu apprécié ce QCM ?</li>
-				</ul>					
+			<div id="questions">
+				<iframe  src="frame_form_questions.php"></iframe>
 			</div>
+			
+		</div>
 			
 		<div id="answercolumn" class="content">
 			<div id="title">Titre du QCM - Par Mobi<div id="questionnumber">5/12&nbsp;</div></div>
 			<div id="answer" >
-				<div class="padder">
+				<iframe  src="frame_form_answer.php"></iframe>
+				<!--<div class="padder">
 					<div id="questiontitle">On considère les deux unités de pression : le Bar et le Pascal. Laquelle des propositions suivantes est correcte ?</div>
 					<form action="" method="POST" id= "questionchoices" >
 						<input type="radio" name="group1" value="Choice1"> 1 bar = 105 N.m².s² <br>
@@ -80,7 +66,7 @@
 					Coucou
 					</div>
 					<input type="submit" form="QuestionChoices" value="Sauvegarder" id="btn"></button>
-				</div>
+				</div>-->
 			</div>
 		</div>
 		<!--<div id="banner">
@@ -100,32 +86,8 @@
 	
 	</body>
 	
-	<script>
-	
-		hint=false;
-		
-		$('#indice').click( function() { // Au clic sur un élément
-		
-			// $("#indice_content").animate({opacity: 'toggle', height: 'toggle'}, 4000);
-			
-		
-			if(!hint) {
-				$("#indice_content").animate({height: 'toggle'}, 300).animate({opacity: '1'}, 300);
-				$('#indice').html("▼ Indice");				
-			}
 
-			else {
-				$("#indice_content").animate({opacity: '0'}, 300).animate({height: 'toggle'}, 300);
-				$('#indice').html("► Indice");				
-			}
-
-			
-			hint = !hint;
-			
-		});
-		
-
-	</script>
 	<script src="js/responsive.js"></script>
+	<script src="js/form.js"></script>
 	
 </html>
