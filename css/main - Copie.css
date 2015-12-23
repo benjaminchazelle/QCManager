@@ -73,58 +73,9 @@ hr {
 	background: #fff;
 	bottom:0;
 	border-right: solid #D9DEE3 1px;
-	z-index: 1000;
+	
 
 }
-
-#contentcolumn{
-	margin-left: auto;
-	margin-right: auto;
-	width: 750px;
-}
-
-#cf_table{
-	width: 750px;
-	line-height: 30px;
-	margin-top: 50px;
-}
-
-#cf_nom{
-	width: 728px;
-    border: 1px solid #d9dee3;
-    padding: 10px;
-	color: #37474f;
-	font-size: 15px;
-}
-
-#cf_description{
-	width: 728px;
-	height: 128px;
-    border: 1px solid #d9dee3;
-    padding: 10px;
-	color: #37474f;
-	font-size: 15px;
-	  font-family: 'Karla';
-}
-
-#button{
-    background-color: #2196F3;
-    border-radius: 3px;
-    color: #FFFFFF;
-    font-size: 18px;
-    padding: 6px 8px;
-    text-decoration: none;
-    border: 0;
-    cursor: pointer;
-	float: right;
-	margin-top: 10px;
-}
-
-#button: hover{
-    background-color: #3cb0fd;
-	text-decoration: none;
-}
-
 
 #questionscolumn{
 	position:absolute;
@@ -317,6 +268,7 @@ iframe {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	cursor:pointer;
 }
 
 #questions_framed li:last-child{
@@ -364,7 +316,7 @@ iframe {
 	padding: 4px 6px;
 	text-decoration: none;
 	border:0;
-	margin-top: 30px;
+	margin-top: 50px;
 	cursor:pointer;
 	transition:background 0.3s;
 }

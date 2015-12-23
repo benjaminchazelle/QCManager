@@ -14,7 +14,7 @@ class Validation {
 		Validation::$f->{"Int"} = function ($d) { return is_numeric($d) && ($d%1 == 0); };	
 		Validation::$f->{"Number"} = function ($d) { return is_numeric($d); };	
 		Validation::$f->{"notEmpty_String"} = function ($d) { return strlen($d) > 0; };	
-		Validation::$f->{"datetime"} = function ($d) { return DateTime::createFromFormat('Y/m/d H:i', $d) != false; };	
+		Validation::$f->{"datetime"} = function ($d) { return DateTime::createFromFormat('d/m/Y H:i', $d) != false; };	
 		Validation::$f->{"Email"} = function ($d) { return filter_var($d, FILTER_VALIDATE_EMAIL); };	
 		Validation::$f->{"Timestamp"} = Validation::$f->Int;	
 		Validation::$f->{"anterior_Timestamp"} = function ($d) { return $d < time(); };	
