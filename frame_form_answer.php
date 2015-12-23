@@ -26,25 +26,23 @@
 			</div>
 			
 		<script>
-		hint=false;
+		
+		parent.InitAnswerFrameController(window);
+		
+		hint = false;
 
-		$('#indice').click( function() { // Au clic sur un élément
+		$('#indice').click( function() {
 
-		// $("#indice_content").animate({opacity: 'toggle', height: 'toggle'}, 4000);
+			if(!hint) {
+				$("#indice_content").animate({height: 'toggle'}, 300).animate({opacity: '1'}, 300);
+				$('#indice').html("▼ Indice");				
+			}
+			else {
+				$("#indice_content").animate({opacity: '0'}, 300).animate({height: 'toggle'}, 300);
+				$('#indice').html("► Indice");				
+			}
 
-
-		if(!hint) {
-		$("#indice_content").animate({height: 'toggle'}, 300).animate({opacity: '1'}, 300);
-		$('#indice').html("▼ Indice");				
-		}
-
-		else {
-		$("#indice_content").animate({opacity: '0'}, 300).animate({height: 'toggle'}, 300);
-		$('#indice').html("► Indice");				
-		}
-
-
-		hint = !hint;
+			hint = !hint;
 
 		});
 		</script>

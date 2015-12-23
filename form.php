@@ -1,3 +1,42 @@
+<?php
+
+require_once("include/database.inc.php");
+require_once("include/auth.class.php");
+require_once("include/validation.class.php");
+
+$auth = new Auth();
+
+$error = true;
+
+$data = array();
+
+if(Validation::Query($_GET, array("id")) && is_numeric($_GET["id"])) {
+
+	$questionnaire_result = $_MYSQLI->query('SELECT * FROM questionnaire WHERE questionnaire_id  = "'.$_MYSQLI->real_escape_string($_GET["id"]).'" LIMIT 1');
+		
+	if($questionnaire_result->num_rows == 1)	{
+		
+		$error = false;
+		
+		$questionnaire = $questionnaire_result->fetch_object();
+		
+		$data["questionnaire"] = $questionnaire;
+		
+		$own = $questionnaire->questionnaire_user_id == Auth::getUserId();
+
+		$data["questionnaire"]->own = $own;
+		
+	}
+	
+	
+}
+
+if($error) {
+	header("Location: 404.php");
+	exit;
+}
+			
+?>
 <!DOCTYPE html>
 <html>
 
@@ -6,6 +45,8 @@
 		<title>QCManager</title>
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 		<script src="js/jquery.min.js"></script>
+		<script src="js/formControllers.js"></script>
+
 	</head>
 	
 	<body>
@@ -18,76 +59,51 @@
 
 		<div id="menucolumn">
 			<div id="menu">
-			<div id="logo"></div>
-			<div id="menu_items">
-			<div class="padder">
-				<ul>
-					<li><a href=""><img src="media/user/mobi.png" />Mobi</a></li>
-					<li><a href="">Tableau de bord</a></li>
-					<li><a href="">Créer un QCM</a></li>
-					<li><a href="">Déconnexion</a></li>
-				</ul>
-				<hr/>
-				<div id="author">Par Mobi</div>
-				<div id="description">QCM sur le cours vu depuis le début de l'année. Utile pour s'entrainer avant un DS ou un concours.</div>
-				<!--<div id="progressinfo">Progression du QCM : 17%</div>
-				<div id="progressbar"><img src="img/progress.png"></img></div>
-				<div id="time">Temps restant : 6j 5h 42m </div>-->
-			</div>
-			</div>
+				<div id="logo"></div>
+				<div id="menu_items">
+					<div class="padder">
+						<ul>
+							<li><a href=""><img src="media/user/mobi.png" />Mobi</a></li>
+							<li><a href="">Tableau de bord</a></li>
+							<li><a href="">Créer un QCM</a></li>
+							<li><a href="">Déconnexion</a></li>
+						</ul>
+						<hr/>
+						<div id="author">Par Mobi</div>
+						<div id="description">QCM sur le cours vu depuis le début de l'année. Utile pour s'entrainer avant un DS ou un concours.</div>
+						<!--<div id="progressinfo">Progression du QCM : 17%</div>
+						<div id="progressbar"><img src="img/progress.png"></img></div>
+						<div id="time">Temps restant : 6j 5h 42m </div>-->
+					</div>
+				</div>
 			</div>
 		</div>
 
 		<div id="questionscolumn">
 			<div id="searchBar">
 				<div id="searchfield">
-					<input type="text"  placeholder="Chercher une question..." />
+					<input id="searchterm" type="text"  placeholder="Chercher une question..." />
 				</div>
 			</div>
 			<div id="questions">
-				<iframe  src="frame_form_questions.php"></iframe>
+				<iframe id="questionsFrame" src="frame_form_questions.php?id=<?php echo $questionnaire->questionnaire_id; ?>"></iframe>
 			</div>
-			
 		</div>
 			
 		<div id="answercolumn" class="content">
-			<div id="title">Titre du QCM - Par Mobi<div id="questionnumber">5/12&nbsp;</div></div>
+			<div id="title">
+				Titre du QCM - Par Mobi
+				<div id="questionnumber">5/12&nbsp;</div>
+			</div>
 			<div id="answer" >
-				<iframe  src="frame_form_answer.php"></iframe>
-				<!--<div class="padder">
-					<div id="questiontitle">On considère les deux unités de pression : le Bar et le Pascal. Laquelle des propositions suivantes est correcte ?</div>
-					<form action="" method="POST" id= "questionchoices" >
-						<input type="radio" name="group1" value="Choice1"> 1 bar = 105 N.m².s² <br>
-						<input type="radio" name="group1" value="Choice2" checked> 1 bar = 145 N.m².s² <br>
-						<input type="radio" name="group1" value="Choice3"> 1 bar = 108 N.m².s² <br>
-					</form>
-					<div id="indice">► Indice</div>
-					<div id="indice_content" style="">
-					Coucou
-					</div>
-					<input type="submit" form="QuestionChoices" value="Sauvegarder" id="btn"></button>
-				</div>-->
+				<iframe id="answerFrame" src=""></iframe>
 			</div>
 		</div>
-		<!--<div id="banner">
-			<div id="logo"><span>QCManager</span></div>
-			<div id="searchBar">
-				<div id="searchfield">
-					<input type="text"  placeholder="Chercher une question..." />
-				</div>
-			</div>
-			<div id="title">Titre du QCM - Par Mobi<div id="questionnumber">5/12&nbsp;</div></div>
-		</div>-->
-			
-		</div>
-
 	
 	</div>
 	
-	</body>
-	
-
 	<script src="js/responsive.js"></script>
-	<script src="js/form.js"></script>
+
+	</body>	
 	
 </html>
