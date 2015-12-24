@@ -29,9 +29,12 @@ body {
 	font-family: 'Karla', sans-serif;
 	font-size:20px;
 	background: #f5f5f5;
+
 }
 
-input {
+
+
+input, textarea {
 	font-family: "Karla",sans-serif;
 }
 
@@ -218,7 +221,7 @@ hr {
 }
 
 .padder {
-	margin: 15px;
+	margin: 10px 15px 0;
 }
 
 #menu ul{
@@ -248,7 +251,7 @@ hr {
 
 
 
-#menu ul li:last-child {
+.topmarger {
 	margin-top: 50px;
 }
 
@@ -261,7 +264,7 @@ hr {
 
 #description{
 	color: #37474f;
-	margin-bottom: 50px;
+	margin-bottom: 25px;
 	width:100%;
 	line-height: 20px;
 	font-size:16px;
@@ -455,7 +458,7 @@ iframe {
     color: #37474f;
     font-size: 17px;
     padding: 10px;
-	width:95%;
+	width:92%;
 }
 
 #choices  input[type=text]{
@@ -491,10 +494,36 @@ iframe {
 
 #choices td:last-child {
     width: 90px;
+	text-align:center;
 }
 
 #weight {
 	text-align:left;
 }
 
+#answerForm textarea {
+    border: 1px solid #d9dee3;
+    color: #37474f;
+    font-size: 17px;
+    padding: 10px;
+	width:92%;
+	height:100px;
+}
+#answerForm {
+	clear:both;
+}
+.doublefieldset {
+	width:100%;
+}
 
+.doublefieldset td {
+	width:50%;
+}
+
+.doublefieldset input {
+	width:85% !important;
+}
+
+.error {
+	border: 1px solid red !importan;
+}

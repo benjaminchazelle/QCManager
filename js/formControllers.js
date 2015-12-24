@@ -56,8 +56,18 @@ function QuestionSelectQuestionController(questionItem) {
 
 
 function RefreshQuestionsFrameController() {
-document.getElementById("questionsFrame").src += "&noRefresh=true";
+	document.getElementById("questionsFrame").src += "&noRefresh=true";
 	//window.location.href
+}
+
+function EditFormController() {
+
+	document.getElementById("answerFrame").src = "frame_form_edit.php?id=" + QUESTIONNAIRE_ID;
+}
+
+function ViewStatController() {
+	document.getElementById("answerFrame").src = "frame_form_stat.php?id=" + QUESTIONNAIRE_ID;
+	
 }
 
 

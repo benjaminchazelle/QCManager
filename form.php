@@ -45,6 +45,9 @@ if($error) {
 		<title>QCManager</title>
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 		<script src="js/jquery.min.js"></script>
+		<script>
+		QUESTIONNAIRE_ID = <?php echo $_GET["id"]; ?>;
+		</script>
 		<script src="js/formControllers.js"></script>
 
 	</head>
@@ -68,12 +71,22 @@ if($error) {
 							<li><a href="">Créer un QCM</a></li>
 							<li><a href="">Déconnexion</a></li>
 						</ul>
-						<hr/>
+
+						<hr />
 						<div id="author">Par Mobi</div>
+
 						<div id="description">QCM sur le cours vu depuis le début de l'année. Utile pour s'entrainer avant un DS ou un concours.</div>
 						<!--<div id="progressinfo">Progression du QCM : 17%</div>
 						<div id="progressbar"><img src="img/progress.png"></img></div>
 						<div id="time">Temps restant : 6j 5h 42m </div>-->
+						<?php
+						if($own) { ?>
+						<hr/>
+						<ul>
+							<li><a onclick="EditFormController()" href="#">Modifier</a></li>
+							<li><a onclick="ViewStatController()"href="#">Statistiques</a></li>
+						</ul>	
+						<?php } ?>
 					</div>
 				</div>
 			</div>
