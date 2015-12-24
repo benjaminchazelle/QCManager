@@ -25,9 +25,9 @@
 
 body {
 	margin:0;
-	line-height: 50px;
 	font-family: 'Karla', sans-serif;
-	font-size:20px;
+    font-size: 18px;
+    line-height: 42px;
 	background: #f5f5f5;
 
 }
@@ -169,6 +169,7 @@ hr {
     background-color: #f5f5f5;
     border-bottom: 1px solid #d9dee3;
     height: 67px;
+	line-height: 67px;
     top: 0;
 }
 
@@ -179,6 +180,7 @@ hr {
 	text-align: center;
 	font-weight: 700;
 	border-bottom: solid #D9DEE3 1px;
+	 line-height: 57px;
 }
 
 #answer {
@@ -201,7 +203,7 @@ hr {
     left: 15px;
     position: absolute;
     right: 35px;
-    top: 7px;
+    top: 0;
 	font-weight:bold;
 
 }
