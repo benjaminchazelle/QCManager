@@ -13,6 +13,7 @@ class Validation {
 		Validation::$f->{"unsigned_Int"} = function ($d) { return is_numeric($d) && ($d%1 == 0) && $d >= 0; };	
 		Validation::$f->{"Int"} = function ($d) { return is_numeric($d) && ($d%1 == 0); };	
 		Validation::$f->{"Number"} = function ($d) { return is_numeric($d); };	
+		Validation::$f->{"String"} = function ($d) { return true; };	
 		Validation::$f->{"notEmpty_String"} = function ($d) { return strlen($d) > 0; };	
 		Validation::$f->{"datetime"} = function ($d) { return DateTime::createFromFormat('d/m/Y H:i', $d) != false; };	
 		Validation::$f->{"Email"} = function ($d) { return filter_var($d, FILTER_VALIDATE_EMAIL); };	
@@ -104,8 +105,13 @@ class Validation {
 		
 		foreach($includeFields as $f) {
 
-			if(isset($this->fields[$f]))
-				$fields[$f] = $mysqli->real_escape_string($this->fields[$f]);
+			if(isset($this->fields[$f])) {
+				if($mysqli != null)
+					$fields[$f] = $mysqli->real_escape_string($this->fields[$f]);				
+				else
+					$fields[$f] = $this->fields[$f];			
+			}
+
 		}
 		
 		foreach($otherFields as $f => $v) {

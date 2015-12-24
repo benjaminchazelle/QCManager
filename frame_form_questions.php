@@ -27,7 +27,7 @@ if(Validation::Query($_GET, array("id")) && is_numeric($_GET["id"])) {
 
 	$questionnaire_result = $_MYSQLI->query('SELECT * FROM questionnaire WHERE questionnaire_id  = "'.$_MYSQLI->real_escape_string($_GET["id"]).'" LIMIT 1');
 		
-	if($questionnaire_result->num_rows == 1)	{
+	if($questionnaire_result->num_rows > 0)	{
 		
 		$error = false;
 		
@@ -40,9 +40,8 @@ if(Validation::Query($_GET, array("id")) && is_numeric($_GET["id"])) {
 		$data["questionnaire"]->own = $own;
 		
 	}
-	
-	
 }
+
 
 if($error) {
 	header("Location: 404.php");
@@ -78,7 +77,7 @@ if($error) {
 				if($first == null)
 					$first = $question->question_id;
 				
-				echo '<li id="'.$question->question_id.'" onclick="parent.QuestionSelectController(this)" name="'.littleCasify(utf8_encode($question->question_content)).'">'.utf8_encode($question->question_content).'</li>'."\n";
+				echo '<li id="'.$question->question_id.'" onclick="parent.QuestionSelectQuestionController(this)" name="'.littleCasify(($question->question_content)).'">'.($question->question_content).'</li>'."\n";
 				
 			}
 			?>
@@ -86,7 +85,9 @@ if($error) {
 		
 		<script>
 			parent.InitQuestionsFrameController(window);
-			parent.QuestionSelectController(document.getElementById(<?php echo $first; ?>));
+			
+			if(window.location.search.indexOf("noRefresh") == -1)
+				parent.QuestionSelectQuestionController(document.getElementById(<?php echo $first; ?>));
 		</script>
 	</body>
 	

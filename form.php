@@ -86,7 +86,7 @@ if($error) {
 				</div>
 			</div>
 			<div id="questions">
-				<iframe id="questionsFrame" src="frame_form_questions.php?id=<?php echo $questionnaire->questionnaire_id; ?>"></iframe>
+				<iframe id="questionsFrame" name="loaded" src="frame_form_questions.php?id=<?php echo $questionnaire->questionnaire_id; ?>"></iframe>
 			</div>
 		</div>
 			

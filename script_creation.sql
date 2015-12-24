@@ -47,9 +47,9 @@ CREATE TABLE QUESTION
     question_questionnaire_id INTEGER NOT NULL,
     question_num INTEGER NOT NULL,
     question_content varchar(255) NOT NULL,
-    question_type enum('checkbox','radiobutton') NOT NULL,
+    question_type enum('checkbox','radio') NOT NULL,
 	question_hint TEXT,
-    question_weight float NOT NULL DEFAULT 1,
+    question_weight enum('1', '2', '3', '4', '5') NOT NULL DEFAULT 1,
     PRIMARY KEY (question_id),
     FOREIGN KEY (question_questionnaire_id) REFERENCES QUESTIONNAIRE(questionnaire_id) ON DELETE CASCADE
 );
@@ -200,7 +200,7 @@ VALUES (1, "Questionnaire test 1", 1450339471, 1481961871 );
 
 INSERT INTO QUESTION (question_questionnaire_id, question_num, question_content, question_type, question_hint, question_weight)
 VALUES (1, 1, "Quel est l'aliment qui n'est pas un légume ?", "checkbox", "Il est rouge !", 2),
-		(1, 2, "Quelles sont les couleurs possibles d'un cheval ?", "radiobutton", null, 1),
+		(1, 2, "Quelles sont les couleurs possibles d'un cheval ?", "radio", null, 1),
         (1, 3, "Quel mot est bien orthographé ?", "checkbox", null, 1),
         (1, 4, "La taille d'une molécule d'eau est de l'odre de : ", "checkbox", "Elle est toute petite !", 3);
 

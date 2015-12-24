@@ -48,17 +48,22 @@ function QuestionSearchController() {
 	
 }
 
-function QuestionSelectController(questionItem) {
+function QuestionSelectQuestionController(questionItem) {
 
-	//alert("frame_form_answer.php?id=" + questionItem.id);
 	document.getElementById("answerFrame").src = "frame_form_answer.php?id=" + questionItem.id;
-	// alert();
 	
+}
+
+
+function RefreshQuestionsFrameController() {
+document.getElementById("questionsFrame").src += "&noRefresh=true";
+	//window.location.href
 }
 
 
 
 window.onload = function () {
+	
 	
 	document.getElementById("searchterm").onkeyup = QuestionSearchController;
 	
