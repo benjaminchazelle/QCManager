@@ -527,5 +527,8 @@ iframe {
 
 .error {
 	border: 1px solid #f44336 !important;
-	color: #f44336;
+}
+
+.errortxt {
+		color: #f44336;
 }

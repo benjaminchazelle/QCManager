@@ -24,7 +24,7 @@ if(Validation::Query($_GET, array("id", "qid")) && $_GET["id"] == -1) {
 				LIMIT 1';
 	
 	$questionnaire_result = $_MYSQLI->query($q);
-		// var_dump($_GET);exit;	
+
 	if($questionnaire_result->num_rows > 0)	{
 		
 		$questionnaire = $questionnaire_result->fetch_object();
@@ -35,19 +35,19 @@ if(Validation::Query($_GET, array("id", "qid")) && $_GET["id"] == -1) {
 			$new = true;
 			$own = true;
 			
-$data["question"] = new stdClass();
-$data["question"]->question_content = "";
-$data["question"]->question_hint = "";
-$data["question"]->question_type = "checkbox";
-$data["question"]->question_weight = "1";
-$data["question"]->question_weight = "1";
+			$data["question"] = new stdClass();
+			$data["question"]->question_content = "";
+			$data["question"]->question_hint = "";
+			$data["question"]->question_type = "checkbox";
+			$data["question"]->question_weight = "1";
+			$data["question"]->question_weight = "1";
 
-$data["choices"] = array();
-$data["choices"][0] = new stdClass();
-$data["choices"][0]->choice_status = 0;
-$data["choices"][0]->question_type = "checkbox";
-$data["choices"][0]->choice_content = "";
-$data["choices"][0]->choice_id = -1;
+			$data["choices"] = array();
+			$data["choices"][0] = new stdClass();
+			$data["choices"][0]->choice_status = 0;
+			$data["choices"][0]->question_type = "checkbox";
+			$data["choices"][0]->choice_content = "";
+			$data["choices"][0]->choice_id = -1;
 
 		}
 		
@@ -56,7 +56,7 @@ $data["choices"][0]->choice_id = -1;
 	
 }
 else if($auth->isLogged() && Validation::Query($_GET, array("id")) && is_numeric($_GET["id"])) {
-	
+
 	$query = '	SELECT * 
 				FROM question q
 				INNER JOIN choice c ON choice_question_id = question_id
@@ -66,7 +66,7 @@ else if($auth->isLogged() && Validation::Query($_GET, array("id")) && is_numeric
 				GROUP BY choice_id';
 
 	$result = $_MYSQLI->query($query);
-		
+					
 	if($result->num_rows > 0)	{
 		
 		$error = false;
@@ -142,22 +142,33 @@ if($own && Validation::Query($_POST, array("indexes", "correct_indexes", "labels
 	
 
 		
-	$_MYSQLI->query('DELETE FROM choice WHERE choice_question_id = ' . $_GET["id"]);
+	
 	
 	$insertions = array();
 	
 	$correct = array();
 	
+	$one_correct = false;
+	
 	foreach($_POST["indexes"] as $k => $val) {
 		$correct[$k] = in_array($val, $_POST["correct_indexes"]) ? 1 : 0;
 	}
 	
-	foreach($_POST["labels"] as $k => $lbl)
-		$insertions[] = '(NULL, '.$_GET["id"].', \''.$_MYSQLI->real_escape_string($lbl).'\', \''.$correct[$k].'\')';
+	foreach($_POST["labels"] as $k => $lbl) {
+		if($lbl != "") {
+			$insertions[] = '(NULL, '.$_GET["id"].', \''.$_MYSQLI->real_escape_string($lbl).'\', \''.$correct[$k].'\')';			
+			if($correct[$k])
+				$one_correct = true;
+		}
+		
+	}
+	
+	if(count($insertions) > 0 && $one_correct) {
 
+	$_MYSQLI->query('DELETE FROM choice WHERE choice_question_id = ' . $_GET["id"]);
 	$_MYSQLI->query('INSERT INTO choice (choice_id, choice_question_id, choice_content, choice_status) VALUES ' . implode(", ", $insertions)); 
 	
-
+	}
 	
 
 	
@@ -231,7 +242,7 @@ else if(!$own && Validation::Query($_POST, array("post"))) {
 						<form action="" method="post" id="ownquestionform">
 						<fieldset>
 							<legend>Question</legend>
-							<input type="text" name="question_content" placeholder="Entrer une question" value="<?php echo ($data["question"]->question_content); ?>" /><br/>
+							<input id="question_content" type="text" name="question_content" placeholder="Entrer une question" value="<?php echo ($data["question"]->question_content); ?>" /><br/>
 							<div id="type">
 								<label><input id="type_multi" type="radio" <?php echo ($data["question"]->question_type == "checkbox") ? "checked" : ""; ?>  name="question_type" value="checkbox" />Réponse multiple</label>
 								<label><input id="type_one" type="radio"  <?php echo ($data["question"]->question_type == "radio") ? "checked" : ""; ?> name="question_type" value="radio" />Réponse unique</label>
@@ -270,7 +281,7 @@ else if(!$own && Validation::Query($_POST, array("post"))) {
 							</table>
 							<a id="new" href="#">Ajouter une réponse</a>
 							<hr/>
-							<i>Cocher la ou les bonnes réponses</i>
+							<i id="check_indication">Cocher la ou les bonnes réponses</i>
 						</fieldset>
 						
 						<fieldset>
@@ -282,7 +293,7 @@ else if(!$own && Validation::Query($_POST, array("post"))) {
 						
 						<script>
 						index = <?php echo $i; ?>;
-						type = "checkbox";
+						type = '<?php echo $data["question"]->question_type; ?>';
 						$("#type_multi").click(function () { $(".answerbox").attr("type", "checkbox");type="checkbox"; $("#choices i").text("Cocher la ou les bonnes réponses"); });
 						$("#type_one").click(function () { $(".answerbox").attr("type", "radio");type="radio"; $("#choices i").text("Cocher la bonne réponse"); });
 						
@@ -308,9 +319,49 @@ else if(!$own && Validation::Query($_POST, array("post"))) {
 						});
 						
 						$(".del").click(".del", delfunc);
+						
+						function validate() {
+							
+							back = true;
+
+
+							if($("#question_content").val().length == 0) {
+								back = false;
+								$("#question_content").addClass("error");
+								$("#question_content").change(function () {$("#question_content").removeClass("error");});
+							}
+						
+						
+							
+							label_notempty_checked = false;
+							
+							$(".choice").each(function() {
+								if($(this).val().length > 0) {
+									if(this.parentElement.previousElementSibling.firstElementChild.checked)
+										label_notempty_checked = true;
+								}
+							
+							});
+							
+							if(!label_notempty_checked) {
+								$("#check_indication").addClass("errortxt");
+								$(".answerbox").change(function () {
+									if(this.checked)
+										$("#check_indication").removeClass("errortxt");									
+								});
+								
+							}
+
+							
+							// alert(label_notempty_counter);
+							back = back && label_notempty_checked;
+							
+							return back;
+							
+						}
 						</script>
 						
-						<input onclick="document.getElementById('loader').style.display='';" type="submit" form="ownquestionform" value="Sauvegarder" class="btn" />
+						<input onclick="if(!validate())return false;document.getElementById('loader').style.display='';" type="submit" form="ownquestionform" value="Sauvegarder" class="btn" />
 
 						
 						<?php
