@@ -330,6 +330,7 @@ iframe {
 #questionnumber{
 	float:right;
 	font-weight: normal;
+	display:none;
 }
 
 #questiontitle{
@@ -526,4 +527,5 @@ iframe {
 
 .error {
 	border: 1px solid #f44336 !important;
+	color: #f44336;
 }

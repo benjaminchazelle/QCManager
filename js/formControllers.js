@@ -54,6 +54,10 @@ function QuestionSelectQuestionController(questionItem) {
 	
 }
 
+function AddQuestionController() {
+	document.getElementById("answerFrame").src = "frame_form_answer.php?id=-1&qid=" + QUESTIONNAIRE_ID;
+}
+
 
 function RefreshQuestionsFrameController() {
 	document.getElementById("questionsFrame").src += "&noRefresh=true";

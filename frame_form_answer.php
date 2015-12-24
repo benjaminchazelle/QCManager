@@ -9,10 +9,53 @@ require_once("include/sqlbuilder.class.php");
 $auth = new Auth();
 
 $error = true;
+$new = false;
+$own = false;
 
 $data = array();
 
-if($auth->isLogged() && Validation::Query($_GET, array("id")) && is_numeric($_GET["id"])) {
+	
+if(Validation::Query($_GET, array("id", "qid")) && $_GET["id"] == -1) {
+
+	$q = '	SELECT questionnaire.*, COUNT(question_id) AS questionnaire_total_questions
+				FROM questionnaire 
+				INNER JOIN question ON questionnaire_id = question_questionnaire_id
+				WHERE questionnaire_id = '.$_MYSQLI->real_escape_string($_GET["qid"]).'
+				LIMIT 1';
+	
+	$questionnaire_result = $_MYSQLI->query($q);
+		// var_dump($_GET);exit;	
+	if($questionnaire_result->num_rows > 0)	{
+		
+		$questionnaire = $questionnaire_result->fetch_object();
+		
+		if($questionnaire->questionnaire_user_id == Auth::getUserId()) {
+			
+			$error = false;
+			$new = true;
+			$own = true;
+			
+$data["question"] = new stdClass();
+$data["question"]->question_content = "";
+$data["question"]->question_hint = "";
+$data["question"]->question_type = "checkbox";
+$data["question"]->question_weight = "1";
+$data["question"]->question_weight = "1";
+
+$data["choices"] = array();
+$data["choices"][0] = new stdClass();
+$data["choices"][0]->choice_status = 0;
+$data["choices"][0]->question_type = "checkbox";
+$data["choices"][0]->choice_content = "";
+$data["choices"][0]->choice_id = -1;
+
+		}
+		
+		
+	}
+	
+}
+else if($auth->isLogged() && Validation::Query($_GET, array("id")) && is_numeric($_GET["id"])) {
 	
 	$query = '	SELECT * 
 				FROM question q
@@ -73,6 +116,32 @@ $v = new Validation($_POST, array("question_content", "question_type", "question
 if($own && Validation::Query($_POST, array("indexes", "correct_indexes", "labels")) && $v->fieldsExists()) {
 
 	if($v->testAll()) {
+		
+	$statement = new SQLBuilder($_MYSQLI);
+		
+	if($new) {
+
+	$q = $statement->insertInto('question')
+			->set($v->export(null, array("question_content", "question_type", "question_hint", "question_weight"), array("question_questionnaire_id" => $_GET["qid"], "question_num" => ($questionnaire->questionnaire_total_questions+1))))
+			->build();
+			
+	$_MYSQLI->query($q);
+	
+	$_GET["id"] = $_MYSQLI->insert_id;
+		
+	}
+	else {
+		
+	$q = $statement->update('question')
+			->set($v->export(null, array("question_content", "question_type", "question_hint", "question_weight")))
+			->where("question_id", "=", $_GET["id"])
+			->build();
+			
+	$_MYSQLI->query($q);
+	}
+	
+
+		
 	$_MYSQLI->query('DELETE FROM choice WHERE choice_question_id = ' . $_GET["id"]);
 	
 	$insertions = array();
@@ -88,14 +157,9 @@ if($own && Validation::Query($_POST, array("indexes", "correct_indexes", "labels
 
 	$_MYSQLI->query('INSERT INTO choice (choice_id, choice_question_id, choice_content, choice_status) VALUES ' . implode(", ", $insertions)); 
 	
-	$statement = new SQLBuilder($_MYSQLI);
+
 	
-	$q = $statement->update('question')
-			->set($v->export(null, array("question_content", "question_type", "question_hint", "question_weight")))
-			->where("question_id", "=", $_GET["id"])
-			->build();
-			
-	$_MYSQLI->query($q);
+
 	
 	// echo $q;
 	
@@ -158,6 +222,7 @@ else if(!$own && Validation::Query($_POST, array("post"))) {
 					<?php
 					if($own) {
 						
+
 
 
 						?>

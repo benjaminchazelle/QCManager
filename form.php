@@ -84,6 +84,7 @@ if($error) {
 						<hr/>
 						<ul>
 							<li><a onclick="EditFormController()" href="#">Modifier</a></li>
+							<li><a onclick="AddQuestionController()" href="#">Ajouter question</a></li>
 							<li><a onclick="ViewStatController()"href="#">Statistiques</a></li>
 						</ul>	
 						<?php } ?>
