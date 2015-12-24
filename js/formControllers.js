@@ -70,6 +70,14 @@ function ViewStatController() {
 	
 }
 
+function UpdateFormController(data) {
+	console.log(data);
+	
+	document.getElementById("title").firstElementChild.textContent = data.questionnaire_title;
+	document.getElementById("description").textContent = data.questionnaire_description;
+	
+	//date de fin
+}
 
 
 window.onload = function () {

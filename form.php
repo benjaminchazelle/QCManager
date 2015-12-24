@@ -75,7 +75,7 @@ if($error) {
 						<hr />
 						<div id="author">Par Mobi</div>
 
-						<div id="description">QCM sur le cours vu depuis le début de l'année. Utile pour s'entrainer avant un DS ou un concours.</div>
+						<div id="description"><?php echo $questionnaire->questionnaire_description; ?></div>
 						<!--<div id="progressinfo">Progression du QCM : 17%</div>
 						<div id="progressbar"><img src="img/progress.png"></img></div>
 						<div id="time">Temps restant : 6j 5h 42m </div>-->
@@ -105,7 +105,7 @@ if($error) {
 			
 		<div id="answercolumn" class="content">
 			<div id="title">
-				Titre du QCM - Par Mobi
+				<span><?php echo $questionnaire->questionnaire_title; ?></span>
 				<div id="questionnumber">5/12&nbsp;</div>
 			</div>
 			<div id="answer" >

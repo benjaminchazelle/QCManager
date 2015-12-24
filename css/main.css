@@ -507,7 +507,7 @@ iframe {
     font-size: 17px;
     padding: 10px;
 	width:92%;
-	height:100px;
+	height:64px;
 }
 #answerForm {
 	clear:both;
@@ -525,5 +525,5 @@ iframe {
 }
 
 .error {
-	border: 1px solid red !importan;
+	border: 1px solid #f44336 !important;
 }
