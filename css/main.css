@@ -534,3 +534,24 @@ iframe {
 .errortxt {
 		color: #f44336;
 }
+
+
+#rules {
+	list-style:none;
+
+}
+
+#statform {
+		text-align:left;
+}
+#statform ul{
+margin-top: 0px; padding-left: 30px;
+}
+
+#statform table {
+	width:100%;
+}
+
+#statform td {
+	border-top:1px solid #d9dee3;
+}

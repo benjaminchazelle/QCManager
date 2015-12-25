@@ -65,6 +65,8 @@ else if($auth->isLogged() && Validation::Query($_GET, array("id")) && is_numeric
 				WHERE (answer_student_user_id = '.Auth::getUserId().' OR answer_student_user_id IS NULL) AND question_id = '.$_GET["id"].'
 				GROUP BY choice_id';
 
+				echo $query;
+				
 	$result = $_MYSQLI->query($query);
 					
 	if($result->num_rows > 0)	{
@@ -230,6 +232,7 @@ else if(!$own && Validation::Query($_POST, array("post"))) {
 	<body style="background: #fff;">
 			<div id="answer_framed" >
 				<div class="padder">
+					<img id="loader" src="media/static/loader.gif" alt="" style="display:none;margin-top:10px;" />
 					<?php
 					if($own) {
 						
@@ -237,7 +240,7 @@ else if(!$own && Validation::Query($_POST, array("post"))) {
 
 
 						?>
-						<img id="loader" src="media/static/loader.gif" alt="" style="display:none;margin-top:10px;" />
+						
 						<div id="answerForm">
 						<form action="" method="post" id="ownquestionform">
 						<fieldset>
@@ -409,7 +412,6 @@ else if(!$own && Validation::Query($_POST, array("post"))) {
 					
 					<input onclick="document.getElementById('loader').style.display='';" type="submit" form="questionchoices" value="Sauvegarder" class="btn" />
 
-					<br/><img id="loader" src="media/static/loader.gif" alt="" style="display:none;margin-top:10px;" />
 					
 					<?php } ?>
 				</div>

@@ -83,7 +83,7 @@ if($error) {
 						if($own) { ?>
 						<hr/>
 						<ul>
-							<li><a onclick="EditFormController()" href="#">Modifier</a></li>
+							<li><a onclick="EditFormController()" href="#">Éditer les infos</a></li>
 							<li><a onclick="AddQuestionController()" href="#">Nouvelle question</a></li>
 							<li><a onclick="ViewStatController()"href="#">Statistiques</a></li>
 						</ul>	

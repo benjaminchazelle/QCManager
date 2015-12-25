@@ -22,21 +22,10 @@ if($auth->isLogged()) {
 			$questionnaire = $questionnaire_result->fetch_object();
 			
 			$ajax->data["questionnaire"] = $questionnaire;
-			
-			$own = $questionnaire->questionnaire_user_id == Auth::getUserId();
 
-			$ajax->data["questionnaire"]->own = $own;
+			$ajax->data["questionnaire"]->own = $questionnaire->questionnaire_user_id == Auth::getUserId();
 			
-			$query = $own ?	'	SELECT *
-								FROM question q
-								JOIN choice c ON c.choice_question_id = q.question_id
-								LEFT JOIN answer a ON a.answer_choice_id = c.choice_id
-								WHERE question_questionnaire_id = '.$_MYSQLI->real_escape_string($_GET["questionnaire_id"]).'
-								GROUP BY choice_id
-								ORDER BY question_num ASC, question_id ASC
-							' :
-							
-							'	SELECT *, SUM(case when answer_student_user_id = '.Auth::getUserId().' then 1 else 0 end) as checked
+			$query = '	SELECT *
 								FROM question q
 								JOIN choice c ON c.choice_question_id = q.question_id
 								LEFT JOIN answer a ON a.answer_choice_id = c.choice_id
@@ -45,7 +34,6 @@ if($auth->isLogged()) {
 								ORDER BY question_num ASC, question_id ASC
 							';
 
-			// echo $query;
 			$ajax->data["questions"] = array();
 
 			$questions_result = $_MYSQLI->query($query);
@@ -55,13 +43,11 @@ if($auth->isLogged()) {
 				
 				if(!isset($ajax->data["questions"][$question->question_id])) {
 					
-					$ajax->data["questions"][$question->question_id] = array("num" => utf8_encode($question->question_num), "content" => utf8_encode($question->question_content), "type" => utf8_encode($question->question_type), "hint" => utf8_encode($question->question_hint), "choices" => array(), "total_correct" => 0);
+					$ajax->data["questions"][$question->question_id] = array("num" => ($question->question_num), "content" => ($question->question_content), "type" => ($question->question_type), "hint" => ($question->question_hint), "choices" => array(), "total_correct" => 0);
 					
 				}
 					
-				$ajax->data["questions"][$question->question_id]["choices"][$question->choice_id] = array("content" => utf8_encode($question->choice_content));
-				
-				if($own) {
+				$ajax->data["questions"][$question->question_id]["choices"][$question->choice_id] = array("content" => ($question->choice_content));
 
 					
 					if($question->choice_status == 1)
@@ -69,58 +55,50 @@ if($auth->isLogged()) {
 					
 					$ajax->data["questions"][$question->question_id]["choices"][$question->choice_id]["correct"] = $question->choice_status == 1;
 					$ajax->data["questions"][$question->question_id]["weight"] = $question->question_weight;
-				}
-				else {
-					
-					unset($ajax->data["questions"][$question->question_id]["total_correct"]);
-					
-					$ajax->data["questions"][$question->question_id]["choices"][$question->choice_id]["checked"] = $question->checked == 1;
-				}
 			}
 			
-			if($own) { //answer
+
 			
-				$question_keys = array_fill_keys((array_keys($ajax->data["questions"])), array("correct" => 0, "uncorrect" => 0));
+			$question_keys = array_fill_keys((array_keys($ajax->data["questions"])), array("correct" => 0, "uncorrect" => 0));
+			
+			$ajax->data["answers"] = array();
+		
+			$query = '	SELECT answer_student_user_id, CONCAT(user_firstname, " ", user_lastname) AS user_identity, question_id, choice_id
+						FROM question q
+						JOIN choice c ON c.choice_question_id = q.question_id
+						INNER JOIN answer a ON a.answer_choice_id = c.choice_id
+						INNER JOIN user u ON u.user_id = a.answer_student_user_id
+						WHERE question_questionnaire_id = '.$_MYSQLI->real_escape_string($_GET["questionnaire_id"]).'
+						GROUP BY answer_student_user_id, choice_id';
+						
+			$answer_result = $_MYSQLI->query($query);	
+
+			while($answer = $answer_result->fetch_object()) {
 				
-				$ajax->data["answers"] = array();
-			
-				$query = '	SELECT answer_student_user_id, CONCAT(user_firstname, " ", user_lastname) AS user_identity, question_id, choice_id
-							FROM question q
-							JOIN choice c ON c.choice_question_id = q.question_id
-							INNER JOIN answer a ON a.answer_choice_id = c.choice_id
-							INNER JOIN user u ON u.user_id = a.answer_student_user_id
-							WHERE question_questionnaire_id = '.$_MYSQLI->real_escape_string($_GET["questionnaire_id"]).'
-							GROUP BY answer_student_user_id, choice_id';
-							
-				$answer_result = $_MYSQLI->query($query);	
-
-				while($answer = $answer_result->fetch_object()) {
+				if(isset($ajax->data["questions"][$answer->question_id])) {
 					
-					if(isset($ajax->data["questions"][$answer->question_id])) {
-						
-						if(!isset($ajax->data["answers"][$answer->answer_student_user_id]))
-							$ajax->data["answers"][$answer->answer_student_user_id] = array("identity" => $answer->user_identity, "score" => $question_keys);
-						
-						if(isset($ajax->data["questions"][$answer->question_id]["choices"][$answer->choice_id])) {
+					if(!isset($ajax->data["answers"][$answer->answer_student_user_id]))
+						$ajax->data["answers"][$answer->answer_student_user_id] = array("identity" => $answer->user_identity, "score" => $question_keys);
+					
+					if(isset($ajax->data["questions"][$answer->question_id]["choices"][$answer->choice_id])) {
 
-							
-							if($ajax->data["questions"][$answer->question_id]["choices"][$answer->choice_id]["correct"]) {
-								$ajax->data["answers"][$answer->answer_student_user_id]["score"][$answer->question_id]["correct"]++;	
-							}
-
-							else {
-								$ajax->data["answers"][$answer->answer_student_user_id]["score"][$answer->question_id]["uncorrect"]++;
-							}
-							
+						
+						if($ajax->data["questions"][$answer->question_id]["choices"][$answer->choice_id]["correct"]) {
+							$ajax->data["answers"][$answer->answer_student_user_id]["score"][$answer->question_id]["correct"]++;	
 						}
-						
+
+						else {
+							$ajax->data["answers"][$answer->answer_student_user_id]["score"][$answer->question_id]["uncorrect"]++;
+						}
 						
 					}
 					
-
 					
 				}
+				
+				
 			}
+			
 
 		}
 		else {
