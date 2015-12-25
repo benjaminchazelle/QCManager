@@ -1,40 +1,22 @@
+page de profil + intégration
 
 
+tableau de bord
 
-/login
-	auth(mail, passwd), test passwd
-	
-/register	
-	if(log) go index
-	else
-		inscription yolo (n'importe qui)
-		
-/deconnexion
-	session destroy
-	
-	
-/createForm
+	mes qcm crée
 
+	qcm auquel j'ai répondu
 
-/deleteForm (reservé owner)
+	stat qcm fini
 
+css onepage (profil, createqcm)
 
+script datetime integrity
 
-/getFormStat (reservé owner)
+upload img profil
 
+ordonancement question via drag and drop
 
+indice de la question actuelle
 
-/getFormAnswers(question et reponse balancé, avec état de réponse actuel)
-
-
-/setChoice
-
-
-/profil  (reservé owner)
-
-
-
-20fe3d143653ef86b6c32a85ed24774898e62808
-	
-	
-	
+notif question répondu ou non
