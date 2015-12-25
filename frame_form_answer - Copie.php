@@ -5,7 +5,7 @@ require_once("include/auth.class.php");
 require_once("include/validation.class.php");
 require_once("include/sqlbuilder.class.php");
 
-	$_SESSION["user_id"] = 1;	
+		
 $auth = new Auth();
 
 $error = true;
@@ -56,41 +56,48 @@ if(Validation::Query($_GET, array("id", "qid")) && $_GET["id"] == -1) {
 	
 }
 else if($auth->isLogged() && Validation::Query($_GET, array("id")) && is_numeric($_GET["id"])) {
-	
-	$question_result = $_MYSQLI->query('SELECT * FROM question INNER JOIN questionnaire ON questionnaire_id = question_questionnaire_id WHERE question_id = '.$_GET["id"]);
-	
-	if($question_result->num_rows > 0) {
+
+	$query = '	SELECT * 
+				FROM question q
+				INNER JOIN choice c ON choice_question_id = question_id
+				LEFT JOIN answer a ON answer_choice_id = choice_id
+				INNER JOIN questionnaire z ON questionnaire_id = question_questionnaire_id
+				WHERE (answer_student_user_id = '.Auth::getUserId().' OR answer_student_user_id IS NULL) AND question_id = '.$_GET["id"].'
+				GROUP BY choice_id';
+
+				echo $query;
+				
+	$result = $_MYSQLI->query($query);
+					
+	if($result->num_rows > 0)	{
 		
 		$error = false;
 		
-		
-		
-		$data["question"] = $question_result->fetch_object();
-		$own = $data["question"]->questionnaire_user_id == Auth::getUserId();
-		
-		$choice_query = '	SELECT *, SUM(case when answer_student_user_id = '.Auth::getUserId().' then 1 else 0 end) as checked
-							FROM question q
-							JOIN choice c ON c.choice_question_id = q.question_id
-							LEFT JOIN answer a ON a.answer_choice_id = c.choice_id
-							WHERE question_id = '.$_GET["id"].'
-							GROUP BY choice_id
-							ORDER BY question_num ASC, question_id ASC';	
-						
-		$choice_result = $_MYSQLI->query($choice_query);
-		
 		$choice_ids = array();
-		$data["choices"] = array();
 		
-		while($row = $choice_result->fetch_object()) {
+		while($row = $result->fetch_object()) {
+			
+			$choice_ids[] = $row->choice_id;	
+			
+			if(!isset($data["question"])) {
+				$data["question"] = $row;		
+
+						
+				
+				$own = $row->questionnaire_user_id == Auth::getUserId();
+			}
+
+			
+			if(!isset($data["choices"]))
+				$data["choices"] = array();
+			
 			$data["choices"][$row->choice_id] = $row;
 			
-			if($row->checked > 0)
-				$choice_ids[] = $row->choice_id;
 		}
+		
+		
 	}
 	
-	
-
 	
 }
 
@@ -178,10 +185,10 @@ if($own && Validation::Query($_POST, array("indexes", "correct_indexes", "labels
 
 //$v = new Validation($_POST, array("user_firstname", "user_lastname", "user_email", "user_schoolname", "user_password", "user_repassword"), $_RULES);
 
-else if(!$own && Validation::Query($_POST, array("post")) && $data["question"]->questionnaire_end_date > time()) {
+else if(!$own && Validation::Query($_POST, array("post"))) {
 
 	foreach($choice_ids as $cid) {
-		$data["choices"][$cid]->checked = 0;
+		$data["choices"][$cid]->answer_id = null;
 	}
 	
 	$delquery = '	DELETE FROM answer 
@@ -195,7 +202,7 @@ else if(!$own && Validation::Query($_POST, array("post")) && $data["question"]->
 		
 		foreach($_POST["choices"] as $cid) {
 			$insertion[] = '(NULL, '.Auth::getUserId().', '.$cid.')';
-			$data["choices"][$cid]->checked = 1;
+			$data["choices"][$cid]->answer_id = -1;
 		}
 		
 		$addquery = 'INSERT INTO answer (answer_id, answer_student_user_id, answer_choice_id) VALUES ' . join(', ', $insertion);
@@ -377,12 +384,12 @@ else if(!$own && Validation::Query($_POST, array("post")) && $data["question"]->
 								// if($choice->answer_id != null)
 									// echo "*";
 								
-								echo '<label><input '. (($choice->checked == 0)?"":"checked") .' class="answerbox" type="checkbox" name="choices[]" value="'.$choice->choice_id.'">'.$choice->choice_content.'</label><br>';
+								echo '<label><input '. (is_null($choice->answer_id)?"":"checked") .' class="answerbox" type="checkbox" name="choices[]" value="'.$choice->choice_id.'">'.$choice->choice_content.'</label><br>';
 								
 							}
 							else {
 								
-								echo '<label><input '. (($choice->checked == 0)?"":"checked") .' class="answerbox" type="radio" name="choices[]" value="'.$choice->choice_id.'">'.$choice->choice_content.'</label><br>';
+								echo '<label><input '. (is_null($choice->answer_id)?"":"checked") .' class="answerbox" type="radio" name="choices[]" value="'.$choice->choice_id.'">'.$choice->choice_content.'</label><br>';
 								
 							}
 							
@@ -401,13 +408,12 @@ else if(!$own && Validation::Query($_POST, array("post")) && $data["question"]->
 						
 					}
 					
-
-					if($data["question"]->questionnaire_end_date > time())
-						echo '<input onclick="document.getElementById(\'loader\').style.display=\'\';" type="submit" form="questionchoices" value="Sauvegarder" class="btn" />';
-					else
-						echo 'Ce QCM est désormais terminé';
+					?>
 					
-					} ?>
+					<input onclick="document.getElementById('loader').style.display='';" type="submit" form="questionchoices" value="Sauvegarder" class="btn" />
+
+					
+					<?php } ?>
 				</div>
 			</div>
 			
