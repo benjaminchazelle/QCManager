@@ -8,8 +8,8 @@ $(".responsive #menucolumn").hover(function () {
 		
 		$("#logo").css("background-image", "url(media/static/logo.png)");
 
-		$("#questionscolumn, #searchBar").css("left", "200px");
-		$("#questionscolumn").css("box-shadow", "none");
+		$("#questionscolumn, #onecolumn").css("left", "200px");
+		$("#questionscolumn, #onecolumn").css("box-shadow", "none");
 	}
 	else {
 		$("#menucolumn").data("state", "off");
@@ -19,8 +19,8 @@ $(".responsive #menucolumn").hover(function () {
 		
 		$("#logo").css("background-image", "");
 
-		$("#questionscolumn, #searchBar").css("left", "");
-		$("#questionscolumn").css("box-shadow", "");
+		$("#questionscolumn, #onecolumn").css("left", "");
+		$("#questionscolumn, #onecolumn").css("box-shadow", "");
 
 	}
 

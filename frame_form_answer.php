@@ -5,7 +5,7 @@ require_once("include/auth.class.php");
 require_once("include/validation.class.php");
 require_once("include/sqlbuilder.class.php");
 
-	$_SESSION["user_id"] = 1;	
+
 $auth = new Auth();
 
 $error = true;
