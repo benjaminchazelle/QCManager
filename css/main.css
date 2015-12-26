@@ -471,9 +471,15 @@ iframe {
 
 #answerForm fieldset {
 	border: 1px solid #d9dee3;
+	border: 0;
 	padding:0 10px 10px;
 	line-height:42px;
 }
+
+#answerForm fieldset legend {
+	font-weight:bold;
+}
+
 #type, #weight {
     margin-left: 2.5%;
     padding: 0;
@@ -610,7 +616,7 @@ margin-top: 0px; padding-left: 30px;
 #qcm_framed ul {
 	list-style:square;
     margin: 0;
-    padding: 0 20px;
+    padding: 0 0 0 40px;
 }
 
 #qcm_framed li {
@@ -618,7 +624,11 @@ margin-top: 0px; padding-left: 30px;
 }
 
 #qcm_framed fieldset {
-	border: 1px solid #d9dee3;	
+	border: 0;	
+}
+
+#qcm_framed fieldset legend {
+	font-weight:bold;
 }
 
 #qcm_framed a {
