@@ -10,24 +10,44 @@ require_once("include/sqlbuilder.class.php");
 $auth = new Auth();
 
 $error = true;
+$new = false;
 
 $data = array();
 
 if(Validation::Query($_GET, array("id")) && is_numeric($_GET["id"])) {
 
-	$questionnaire_result = $_MYSQLI->query('SELECT * FROM questionnaire WHERE questionnaire_id  = "'.$_MYSQLI->real_escape_string($_GET["id"]).'" LIMIT 1');
+	if($_GET["id"] == -1) {
 		
-	if($questionnaire_result->num_rows > 0)	{
+		$error = false;
+		$new = true;
 		
-		$questionnaire = $questionnaire_result->fetch_object();
+		$data["questionnaire"] = new stdClass();
+		$data["questionnaire"]->questionnaire_id = -1;
+		$data["questionnaire"]->questionnaire_title = "";
+		$data["questionnaire"]->questionnaire_description = "";
+		$data["questionnaire"]->questionnaire_start_date = time();
+		$data["questionnaire"]->questionnaire_end_date = time()+60*60*24;
+	
 		
-		if($questionnaire->questionnaire_user_id == Auth::getUserId()) {
+		
+		
+	}
+	else {
+		
+
+		$questionnaire_result = $_MYSQLI->query('SELECT * FROM questionnaire WHERE questionnaire_id  = "'.$_MYSQLI->real_escape_string($_GET["id"]).'" LIMIT 1');
 			
-			$error = false;
-			$data["questionnaire"] = $questionnaire;
+		if($questionnaire_result->num_rows > 0)	{
+			
+			$questionnaire = $questionnaire_result->fetch_object();
+			
+			if($questionnaire->questionnaire_user_id == Auth::getUserId()) {
+				
+				$error = false;
+				$data["questionnaire"] = $questionnaire;
+			}
+			
 		}
-		
-		
 	}
 }
 
@@ -62,17 +82,39 @@ if($v->fieldsExists()) {
 
 	if($v->testAll() && $datetimes) {
 		
-	$statement = new SQLBuilder($_MYSQLI);
-	
-	$q = $statement->update('questionnaire')
-			->set($v->export(null, array("questionnaire_title", "questionnaire_description"), array("questionnaire_start_date" => $startdate, "questionnaire_end_date" => $enddate)))
-			->where("questionnaire_id", "=", $_GET["id"])
-			->build();
+		
+		$statement = new SQLBuilder($_MYSQLI);
+		
+		if($new) {
 			
-	$_MYSQLI->query($q);
+		$inserted = true;
+			
+		$q = $statement->insertInto('questionnaire')
+				->set($v->export(null, array("questionnaire_title", "questionnaire_description"), array("questionnaire_start_date" => $startdate, "questionnaire_end_date" => $enddate, "questionnaire_user_id" => Auth::getUserId())))
+				->build();	
 
-	header("Location: frame_form_edit.php?refresh=true&id=".$_GET["id"]);
-	exit;
+		$_MYSQLI->query($q);
+
+		
+		echo "<html><head><title></title></head><body><script>parent.location.href='form.php?id=".$_MYSQLI->insert_id."';</script></body></html>";
+		exit;
+			
+		}
+		else {
+			
+		$q = $statement->update('questionnaire')
+				->set($v->export(null, array("questionnaire_title", "questionnaire_description"), array("questionnaire_start_date" => $startdate, "questionnaire_end_date" => $enddate)))
+				->where("questionnaire_id", "=", $_GET["id"])
+				->build();
+				
+		$_MYSQLI->query($q);
+
+
+		header("Location: frame_form_edit.php?refresh=true&id=".$_GET["id"]);
+		exit;		
+		}
+				
+
 		
 	}
 	
@@ -171,7 +213,7 @@ if($v->fieldsExists()) {
 		<script>
 
 			
-			<?php if(isset($_GET["refresh"])) echo 'parent.UpdateFormController('.json_encode($data["questionnaire"]).')'; ?>
+			<?php if(!$new && isset($_GET["refresh"])) echo 'parent.UpdateFormController('.json_encode($data["questionnaire"]).')'; ?>
 
 		</script>
 	</body>
