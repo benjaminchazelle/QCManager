@@ -1,96 +1,102 @@
 <?php
 
+require_once("include/database.inc.php");
 require_once("include/auth.class.php");
 require_once("include/validation.class.php");
-require_once("include/database.inc.php");
-require_once("include/sqlbuilder.class.php");
 
-$auth = new Auth(true);
-$user = Auth::getUser();
+$auth = new Auth();
+/*
+$error = true;
 
+$data = array();
 
-$_RULES = array(
-				"user_firstname" => Validation::$f->notEmpty_String,
-				"user_lastname" => Validation::$f->notEmpty_String,
-				"user_email" => Validation::$f->Email,
-				"user_schoolname" => Validation::$f->notEmpty_String
-			);
-			
-$v = new Validation($_POST, array("user_firstname", "user_lastname", "user_email", "user_schoolname", "user_password", "user_repassword"), $_RULES);
-			
-if($v->fieldsExists()) {
+if(Validation::Query($_GET, array("id")) && is_numeric($_GET["id"])) {
 
-	
-	$setrepassword = Validation::Query($_POST, array("user_password", "user_repassword"));
-	$repassword = $setrepassword ? ($_POST["user_password"] == $_POST["user_repassword"]) : false;
-	
-	
-	$email_available = Auth::user_exists($_POST["user_email"]) == 0 || $_POST["user_email"] == $user->user_email;
-
-	
-	
-	if($v->testAll() && $email_available) {
-				
-		$set = $v->export($_MYSQLI, array("user_firstname", "user_lastname", "user_email", "user_schoolname", "user_password"));		
-
-		if(false)
-			$set["user_photo_path"] = "";
+	$questionnaire_result = $_MYSQLI->query('SELECT * FROM questionnaire WHERE questionnaire_id  = "'.$_MYSQLI->real_escape_string($_GET["id"]).'" LIMIT 1');
 		
-		if($repassword)
-			$set["user_password"] = Security::CryptPassword($_POST["user_password"]);
+	if($questionnaire_result->num_rows == 1)	{
 		
-		$statement = new SQLBuilder($_MYSQLI);
+		$error = false;
 		
-		$q = $statement->update('user')
-				->set($set)
-				->where("user_id", "=", Auth::getUserId())
-				->build();
+		$questionnaire = $questionnaire_result->fetch_object();
 		
-		$r = $_MYSQLI->query($q);
+		$data["questionnaire"] = $questionnaire;
+		
+		$own = $questionnaire->questionnaire_user_id == Auth::getUserId();
 
+		$data["questionnaire"]->own = $own;
+		
 	}
 	
-	if($v->fail("user_firstname"))
-		echo "user_firstname fail";
-
-	if($v->fail("user_lastname"))
-		echo "user_lastname fail";
 	
-	if($v->fail("user_schoolname"))
-		echo "user_schoolname fail";
+}
 
-	if($v->fail("user_email"))
-		echo "user_email fail";
-	
-	if($setrepassword && !$repassword)
-		echo "user_repassword fail";
-	
-	if(!$email_available)
-		echo "email unavailable";
-
-	}
-
-$user = Auth::getUser();
-
-	
+if($error) {
+	header("Location: 404.php");
+	exit;
+}
+		*/	
 ?>
-<form action="" method="post">
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>QCManager</title>
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<script src="js/jquery.min.js"></script>
 
 
-	fn<input type="text" name="user_firstname" value="<?php echo $user->user_firstname; ?>" />
-	<br />
-	ln<input type="text" name="user_lastname" value="<?php echo $user->user_lastname; ?>" />
-	<br />
-	em<input type="text" name="user_email" value="<?php echo $user->user_email; ?>" />
-	<br />
-	sn<input type="text" name="user_schoolname" value="<?php echo $user->user_schoolname; ?>" />
-	<br />
-	pw<input type="password" name="user_password" />
-	<br />
-	rpw<input type="password" name="user_repassword" />
-	<br />
+	</head>
 	
-	<input type="submit" name="Envoyer" />
+	<body>
+	
+	<div id="maincontainer" class="responsive">
+	
 
-</form>
 
+
+
+		<div id="menucolumn">
+			<div id="menu">
+				<div id="logo"></div>
+				<div id="menu_items">
+					<div class="padder">
+						<ul>
+							<li><a href=""><img src="media/user/mobi.png" />Mobi</a></li>
+							<li><a href="">Tableau de bord</a></li>
+							<li><a href="">Créer un QCM</a></li>
+							<li><a href="">Déconnexion</a></li>
+						</ul>
+
+						<hr />
+
+						<div id="description"></div>
+						<!--<div id="progressinfo">Progression du QCM : 17%</div>
+						<div id="progressbar"><img src="img/progress.png"></img></div>
+						<div id="time">Temps restant : 6j 5h 42m </div>-->
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+			
+		<div id="onecolumn" class="content">
+			<div id="title">
+				<span>title</span>
+
+			</div>
+			<div id="one" >
+				<iframe id="oneFrame" src="frame_profil_edit.php"></iframe>
+			</div>
+		</div>
+	
+	</div>
+	
+	<script src="js/responsive.js"></script>
+
+	</body>	
+	
+</html>
