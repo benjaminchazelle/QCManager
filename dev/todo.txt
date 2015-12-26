@@ -7,9 +7,9 @@ tableau de bord
 
 	qcm auquel j'ai répondu
 
-	stat qcm fini
+	OK - stat qcm fini
 
-css onepage (profil, createqcm)
+css onepage (profil)
 
 script datetime integrity
 
@@ -22,3 +22,5 @@ ordonancement question via drag and drop
 indice de la question actuelle
 
 notif question répondu ou non
+
+countdown
