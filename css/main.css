@@ -412,6 +412,20 @@ iframe {
 
 }
 
+#searchfield div {
+	float:left;
+	width:50%;
+	text-align:center;
+}
+
+#searchfield .selected span {
+	color:white;
+	background:#2196f3;
+	padding: 6px 10px;
+	font-size:22px;
+	
+}
+
 #createformcolumn{
 	position:absolute;
 	background: #fff;
@@ -572,5 +586,26 @@ margin-top: 0px; padding-left: 30px;
 	background: #fff;
 	border-right:1px solid #d9dee3;
 	transition:left 0.5s, box-shadow 0.5s, width 0.5s;
+}
 
+#qcm_framed ul {
+	list-style:none;
+    margin: 0;
+    padding: 0 20px;
+}
+
+#qcm_framed li {
+	line-height: 30px;	
+}
+
+#qcm_framed fieldset {
+	border: 1px solid #d9dee3;	
+}
+
+#qcm_framed a {
+	color: #2196f3 ;
+}
+
+#minebtn, #otherbtn {
+	cursor:pointer;
 }

@@ -4,6 +4,7 @@ require_once("include/database.inc.php");
 require_once("include/auth.class.php");
 require_once("include/validation.class.php");
 
+// $_SESSION["user_id"] = 5;
 
 		
 $auth = new Auth();
@@ -137,12 +138,15 @@ if($error) {
 								first=false;
 								
 								$("#statresult").append("<tr><th>Nom</th><th>Note sur "+max_score+" </th><th>Note sur 20</tr></tr>");
-								$("#statresult").append("<tr><td><b>Moyenne</b></td><td id=\"avgscore\"></td><td id=\"avgscore20\"></tr></tr>");
+								$("#statresult").append("<tr id=\"avgtr\"><td><b>Moyenne</b></td><td id=\"avgscore\"></td><td id=\"avgscore20\"></tr></tr>");
 							}
 							
 							avg += score;
 							
-							$("#statresult").append("<tr><td>" + data.answers[user].identity + "</td><td>" + parseFloat(score).toFixed(2) + "</td><td>" + parseFloat(score/max_score*20, 2).toFixed(2) + "</tr></tr>");
+							mytr = (parseInt(user) == <?php echo Auth::getUserId(); ?>) ? 'id="mytr"' : '';
+							
+							$("#statresult").append("<tr "+mytr+"><td>" + data.answers[user].identity + "</td><td>" + parseFloat(score).toFixed(2) + "</td><td>" + parseFloat(score/max_score*20, 2).toFixed(2) + "</tr></tr>");
+							
 							
 						}
 						
@@ -151,6 +155,7 @@ if($error) {
 						$("#avgscore").text(avg.toFixed(2)) ;
 						$("#avgscore20").text( parseFloat(avg / max_score * 20).toFixed(2) );
 						
+						$("#mytr").insertAfter("#avgtr");
 						
 					}
 				});
