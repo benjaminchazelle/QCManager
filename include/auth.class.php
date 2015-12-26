@@ -21,7 +21,7 @@ class Auth{
 			if($users_exists_result->num_rows == 1)	{
 				
 				$_SESSION["user_id"] = $users_exists_result->fetch_object()->user_id;
-				$_SESSION["user_id"] = 1;
+				$_SESSION["user_id"] = 5;
 
 			}
 			else {

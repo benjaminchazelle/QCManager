@@ -7,7 +7,7 @@ require_once("include/sqlbuilder.class.php");
 
 
 		
-$auth = new Auth();
+$auth = new Auth(true);
 
 $error = true;
 $new = false;
@@ -178,10 +178,20 @@ if($v->fieldsExists()) {
 						
 						<script>
 						jQuery('#startdate').datetimepicker({
-						  format:'d/m/Y H:i'
+						  format:'d/m/Y H:i',
+						  onShow: function ( currentDateTime  ) {
+							 this.setOptions({
+								maxDate:jQuery('#enddate').val()?jQuery('#enddate').val():false
+							   });
+						  }
 						});
 						jQuery('#enddate').datetimepicker({
-						  format:'d/m/Y H:i'
+						  format:'d/m/Y H:i',
+						  onShow: function ( currentDateTime  ) {
+							 this.setOptions({
+								minDate:jQuery('#startdate').val()?jQuery('#startdate').val():false
+							   });
+						  }
 						});
 						
 						function validate() {
@@ -197,8 +207,17 @@ if($v->fieldsExists()) {
 								}
 							
 							});
+							timeok = true;
+							if($('#startdate').val() != "" && $('#enddate').val() != "") {
+								timeok = ((new Date($('#startdate').val())).getTime() < (new Date($('#enddate').val())).getTime());
+								
+								if(!timeok) {
+										$('#startdate, #enddate').addClass("error");
+										$('#startdate, #enddate').change(function () {$('#startdate, #enddate').removeClass("error");});
+								}
+							}
 							
-							return back;
+							return back && timeok;
 							
 						}
 						
@@ -213,7 +232,7 @@ if($v->fieldsExists()) {
 		<script>
 
 			
-			<?php if(!$new && isset($_GET["refresh"])) echo 'parent.UpdateFormController('.json_encode($data["questionnaire"]).')'; ?>
+			<?php $data["questionnaire"]->questionnaire_end_date = date('d/m/Y H:i', $data["questionnaire"]->questionnaire_end_date); if(!$new && isset($_GET["refresh"])) echo 'parent.UpdateFormController('.json_encode($data["questionnaire"]).')'; ?>
 
 		</script>
 	</body>

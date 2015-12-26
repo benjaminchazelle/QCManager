@@ -49,24 +49,6 @@ if($v->fieldsExists()) {
 		$r = $_MYSQLI->query($q);
 
 	}
-	
-	if($v->fail("user_firstname"))
-		echo "user_firstname fail";
-
-	if($v->fail("user_lastname"))
-		echo "user_lastname fail";
-	
-	if($v->fail("user_schoolname"))
-		echo "user_schoolname fail";
-
-	if($v->fail("user_email"))
-		echo "user_email fail";
-	
-	if($setrepassword && !$repassword)
-		echo "user_repassword fail";
-	
-	if(!$email_available)
-		echo "email unavailable";
 
 	}
 
@@ -74,23 +56,120 @@ $user = Auth::getUser();
 
 	
 ?>
-<form action="" method="post">
+<!DOCTYPE html>
+<html>
 
-
-	fn<input type="text" name="user_firstname" value="<?php echo $user->user_firstname; ?>" />
-	<br />
-	ln<input type="text" name="user_lastname" value="<?php echo $user->user_lastname; ?>" />
-	<br />
-	em<input type="text" name="user_email" value="<?php echo $user->user_email; ?>" />
-	<br />
-	sn<input type="text" name="user_schoolname" value="<?php echo $user->user_schoolname; ?>" />
-	<br />
-	pw<input type="password" name="user_password" />
-	<br />
-	rpw<input type="password" name="user_repassword" />
-	<br />
+	<head>
+		<meta charset="utf-8" />
+		<title>QCManager</title>
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<link rel="stylesheet" type="text/css" href="js/datetimepicker-master/jquery.datetimepicker.css"/ >
+		<script src="js/jquery.min.js"></script>
+		<script src="js/datetimepicker-master/build/jquery.datetimepicker.full.min.js"></script>
+		
+	</head>
 	
-	<input type="submit" name="Envoyer" />
+	<body style="background:#fff;">
+			<div id="answer_framed" >
+				<div class="padder">
 
-</form>
+						<img id="loader" src="media/static/loader.gif" alt="" style="display:none;margin-top:10px;" />
+						
+						<div id="answerForm">
+							<form action="frame_profil_edit.php?refresh=true" method="post" id="ownquestionform">
+							
+								<table class="doublefieldset">
+								<tr><td>
+								<fieldset class="w50">
+									<legend>Nom</legend>
+									<input  id="startdate" type="text" name="user_lastname" value="<?php echo $user->user_lastname; ?>" /><br/>
+								</fieldset>
+								</td><td>
+								<fieldset class="w50">
+									<legend>Prénom</legend>
+									<input   id="enddate" type="text" name="user_firstname" value="<?php echo $user->user_firstname; ?>" /><br/>
+								</fieldset>
+								</td>
+								</tr>
+								</table>							
 
+								<table class="doublefieldset">
+								<tr><td>
+								<fieldset class="w50">
+									<legend>E-Mail</legend>
+									<input  id="startdate" type="text" name="user_email" value="<?php echo $user->user_email; ?>" /><br/>
+								</fieldset>
+								</td><td>
+								<fieldset class="w50">
+									<legend>École</legend>
+									<input id="enddate" type="text" name="user_schoolname" value="<?php echo $user->user_schoolname; ?>" /><br/>
+								</fieldset>
+								</td>
+								</tr>
+								</table>
+								
+								<table class="doublefieldset">
+								<tr><td>
+								<fieldset class="w50">
+									<legend>Mot de passe</legend>
+									<input  id="user_password" type="password" name="user_password" /><br/>
+								</fieldset>
+								</td><td>
+								<fieldset class="w50">
+									<legend>Retaper le</legend>
+									<input id="user_repassword" type="password" name="user_repassword"  /><br/>
+								</fieldset>
+								</td>
+								</tr>
+								</table>
+
+		
+							</form>
+						</div>
+						<script>
+						
+						function validate() {
+							
+							back = true;
+							
+							$("#ownquestionform input[type=text]").each(function() {
+							
+								if($(this).val().length == 0) {
+									back = false;
+									$(this).addClass("error");
+									$(this).change(function () {$(this).removeClass("error");});
+								}
+							
+							});
+							
+							passwordempty = 0;
+							
+							$("#ownquestionform input[type=password]").each(function() {
+							
+								if($(this).val().length == 0) {
+									passwordempty++;
+								}
+							
+							});	
+
+							if(passwordempty == 1 || $("#user_password").val() != $("#user_repassword").val() ) {
+								$("#ownquestionform input[type=password]").addClass("error");
+								$("#ownquestionform input[type=password]").change(function () {$("#ownquestionform input[type=password]").removeClass("error");});
+								return false;
+							}
+								
+							
+							
+							
+							return back;
+							
+						}
+						
+						<?php if(isset($_GET["refresh"])) echo 'parent.UpdateMenuController('.json_encode($user).')'; ?>
+						
+						</script>
+						<input onclick="if(!validate())return false;document.getElementById('loader').style.display='';" type="submit" form="ownquestionform" value="Sauvegarder" class="btn" />
+				</div>
+				</div>
+			</body>
+		</html>

@@ -3,11 +3,8 @@
 require_once("include/database.inc.php");
 require_once("include/auth.class.php");
 require_once("include/validation.class.php");
-
-// $_SESSION["user_id"] = 5;
-
 		
-$auth = new Auth();
+$auth = new Auth(true);
 
 $error = true;
 
@@ -150,24 +147,24 @@ if($error) {
 							
 						}
 						
+						if(total > 0) {
 						avg = parseFloat(avg / total);
 						
 						$("#avgscore").text(avg.toFixed(2)) ;
 						$("#avgscore20").text( parseFloat(avg / max_score * 20).toFixed(2) );
 						
 						$("#mytr").insertAfter("#avgtr");
+						}
+						else {
+							$("#statresult").html("<tr><td>Aucun utilisateur n'a encore répondu à ce QCM.</td></tr>");
+						}
 						
 					}
 				});
-				// alert(rule);
 			});
 			
 			$("#rules input").get(0).click();
-		/*
-			parent.InitQuestionsFrameController(window);
-			
-			if(window.location.search.indexOf("noRefresh") == -1)
-				parent.QuestionSelectQuestionController(document.getElementById(<?php echo $first; ?>));*/
+
 		</script>
 	</body>
 	

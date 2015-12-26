@@ -5,9 +5,6 @@ require_once("include/validation.class.php");
 
 $auth = new Auth();
 
-
-
-
 ?>
 <!DOCTYPE html>
 <html>

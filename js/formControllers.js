@@ -79,6 +79,7 @@ function UpdateFormController(data) {
 	
 	document.getElementById("title").firstElementChild.textContent = data.questionnaire_title;
 	document.getElementById("description").textContent = data.questionnaire_description;
+	document.getElementById("time").textContent = "Fin: " + data.questionnaire_end_date;
 	
 	//date de fin
 }

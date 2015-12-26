@@ -4,38 +4,8 @@ require_once("include/database.inc.php");
 require_once("include/auth.class.php");
 require_once("include/validation.class.php");
 
-$auth = new Auth();
-/*
-$error = true;
-
-$data = array();
-
-if(Validation::Query($_GET, array("id")) && is_numeric($_GET["id"])) {
-
-	$questionnaire_result = $_MYSQLI->query('SELECT * FROM questionnaire WHERE questionnaire_id  = "'.$_MYSQLI->real_escape_string($_GET["id"]).'" LIMIT 1');
-		
-	if($questionnaire_result->num_rows == 1)	{
-		
-		$error = false;
-		
-		$questionnaire = $questionnaire_result->fetch_object();
-		
-		$data["questionnaire"] = $questionnaire;
-		
-		$own = $questionnaire->questionnaire_user_id == Auth::getUserId();
-
-		$data["questionnaire"]->own = $own;
-		
-	}
-	
-	
-}
-
-if($error) {
-	header("Location: 404.php");
-	exit;
-}
-		*/	
+$auth = new Auth(true);
+$user = Auth::getUser();
 ?>
 <!DOCTYPE html>
 <html>
@@ -63,18 +33,11 @@ if($error) {
 				<div id="menu_items">
 					<div class="padder">
 						<ul>
-							<li><a href=""><img src="media/user/mobi.png" />Mobi</a></li>
-							<li><a href="">Tableau de bord</a></li>
-							<li><a href="">Créer un QCM</a></li>
-							<li><a href="">Déconnexion</a></li>
+							<li><a href="./profil.php"><div id="profilimg"><?php echo $user->user_lastname[0]; ?></div><?php echo $user->user_firstname[0] . ". " . $user->user_lastname; ?></a></li>
+							<li><a href="./">Tableau de bord</a></li>
+							<li><a href="./createForm.php">Créer un QCM</a></li>
+							<li><a href="./logout.php">Déconnexion</a></li>
 						</ul>
-
-						<hr />
-
-						<div id="description"></div>
-						<!--<div id="progressinfo">Progression du QCM : 17%</div>
-						<div id="progressbar"><img src="img/progress.png"></img></div>
-						<div id="time">Temps restant : 6j 5h 42m </div>-->
 
 					</div>
 				</div>
@@ -85,7 +48,7 @@ if($error) {
 			
 		<div id="onecolumn" class="content">
 			<div id="title">
-				<span>title</span>
+				<span>Créer un questionnaire</span>
 
 			</div>
 			<div id="one" >

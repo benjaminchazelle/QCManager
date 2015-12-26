@@ -6,7 +6,7 @@ require_once("include/validation.class.php");
 require_once("include/sqlbuilder.class.php");
 
 
-$auth = new Auth();
+$auth = new Auth(true);
 
 $error = true;
 $new = false;

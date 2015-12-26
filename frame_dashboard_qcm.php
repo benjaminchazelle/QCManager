@@ -4,8 +4,6 @@ require_once("include/database.inc.php");
 require_once("include/auth.class.php");
 require_once("include/validation.class.php");
 
-// $_SESSION["user_id"] = 5;
-
 	
 $auth = new Auth(true);
 
@@ -123,7 +121,7 @@ while($row = $other_result->fetch_object()) {
 								foreach($other_collection as $m) {
 									$hay = true;
 									if($m["finished"])
-										echo '<li><a onclick="parent.ViewFormController('.$m["id"].');" href="#">'.$m["title"].'</a></li>';
+										echo '<li><a onclick="parent.ViewStatController('.$m["id"].', \''.addslashes($m["title"]).'\');" href="#">'.$m["title"].'</a></li>';
 								}
 								
 								if(!$hay)

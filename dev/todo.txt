@@ -1,15 +1,4 @@
-page de profil + intégration
 
-
-tableau de bord
-
-	mes qcm crée
-
-	qcm auquel j'ai répondu
-
-	OK - stat qcm fini
-
-css onepage (profil)
 
 script datetime integrity
 

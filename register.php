@@ -44,9 +44,7 @@ if($v->fieldsExists()) {
 	
 	
 	if($v->testAll() && $repassword && $email_available) {
-		
-		// $users_matchs_result = $_MYSQLI->query('SELECT * FROM user WHERE user_email = "'.$_MYSQLI->real_escape_string($_POST["user_email"]).'"');
-		
+				
 		$statement = new SQLBuilder($_MYSQLI);
 		
 		$q = $statement->insertInto('user')

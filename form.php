@@ -5,14 +5,14 @@ require_once("include/auth.class.php");
 require_once("include/validation.class.php");
 
 $auth = new Auth();
-
+$user = Auth::getUser();
 $error = true;
 
 $data = array();
 
 if(Validation::Query($_GET, array("id")) && is_numeric($_GET["id"])) {
 
-	$questionnaire_result = $_MYSQLI->query('SELECT * FROM questionnaire WHERE questionnaire_id  = "'.$_MYSQLI->real_escape_string($_GET["id"]).'" LIMIT 1');
+	$questionnaire_result = $_MYSQLI->query('SELECT * FROM questionnaire INNER JOIN user ON user_id = questionnaire_user_id WHERE questionnaire_id  = "'.$_MYSQLI->real_escape_string($_GET["id"]).'" LIMIT 1');
 		
 	if($questionnaire_result->num_rows == 1)	{
 		
@@ -66,19 +66,17 @@ if($error) {
 				<div id="menu_items">
 					<div class="padder">
 						<ul>
-							<li><a href=""><img src="media/user/mobi.png" />Mobi</a></li>
-							<li><a href="">Tableau de bord</a></li>
-							<li><a href="">Créer un QCM</a></li>
-							<li><a href="">Déconnexion</a></li>
+							<li><a href="./profil.php"><div id="profilimg"><?php echo $user->user_lastname[0]; ?></div><?php echo $user->user_firstname[0] . ". " . $user->user_lastname; ?></a></li>
+							<li><a href="./">Tableau de bord</a></li>
+							<li><a href="./createForm.php">Créer un QCM</a></li>
+							<li><a href="./logout.php">Déconnexion</a></li>
 						</ul>
-
+						
 						<hr />
-						<div id="author">Par Mobi</div>
+						<div id="author">Par <?php echo $questionnaire->user_firstname[0] . ". " . $questionnaire->user_lastname; ?></div>
 
 						<div id="description"><?php echo $questionnaire->questionnaire_description; ?></div>
-						<!--<div id="progressinfo">Progression du QCM : 17%</div>
-						<div id="progressbar"><img src="img/progress.png"></img></div>
-						<div id="time">Temps restant : 6j 5h 42m </div>-->
+						<div id="time">Fin: <?php echo date("d/m/Y H:i", $questionnaire->questionnaire_end_date); ?></div>
 						<?php
 						if($own) { ?>
 						<hr/>
