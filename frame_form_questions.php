@@ -63,7 +63,7 @@ if($error) {
 		<script>
 			var adjustment;
 
-			$("ol.questions_framed").sortable({
+			$("ul.questions_framed").sortable({
 			  group: 'questions_framed',
 			  pullPlaceholder: false,
 			  // animation on drop
