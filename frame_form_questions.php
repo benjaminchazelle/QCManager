@@ -105,7 +105,7 @@ if($error) {
 		
 	</head>
 	
-	<body>
+	<body style="overflow: hidden;">
 		<ul id="questions_framed" class="questions_framed">
 			<?php
 			
