@@ -2,12 +2,11 @@
 
 -- TABLES
 
-
-DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS questionnaire;
-DROP TABLE IF EXISTS question;
-DROP TABLE IF EXISTS choice;
 DROP TABLE IF EXISTS answer;
+DROP TABLE IF EXISTS choice;
+DROP TABLE IF EXISTS question;
+DROP TABLE IF EXISTS questionnaire;
+DROP TABLE IF EXISTS user;
 
 -- reparer
 	
