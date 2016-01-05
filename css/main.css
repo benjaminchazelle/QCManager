@@ -226,31 +226,6 @@ hr {
 	margin: 10px 15px 0;
 }
 
-
-
-body.dragging, body.dragging * {
-  cursor: move !important;
-}
-
-.dragged {
-  position: absolute;
-  opacity: 0.5;
-  z-index: 2000;
-}
-
-ul.questions_framed li.placeholder {
-  position: relative;
-  /** More li styles **/
-}
-ul.questions_framed li.placeholder:before {
-  position: absolute;
-  /** Define arrowhead **/
-}
-
-
-
-
-
 #menu ul{
     list-style: none;
     margin: 0;
@@ -693,7 +668,6 @@ margin-top: 0px; padding-left: 30px;
     background: #000;
     display: none;
 }
-
 #loginmodal {
   width: 300px;
   padding: 15px 20px;

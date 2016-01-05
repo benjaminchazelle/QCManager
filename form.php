@@ -86,8 +86,7 @@ if($error) {
 							<li><a onclick="ViewStatController()"href="#">Statistiques</a></li>
 							<li><a href="#loginmodal" id="modaltrigger">Partager</a></li>
 						</ul>	
-						<?php } ?>
-						
+						<?php } ?>						
 						<div id="loginmodal" style="display:none;">
 							<h1 id="titlemodal">Lien de partage</h1>
 							<form id="loginform" name="loginform">
