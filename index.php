@@ -31,9 +31,9 @@ $user = Auth::getUser();
 					<div class="padder">
 						<ul>
 							<li><a href="./profil.php"><div id="profilimg"><?php echo $user->user_lastname[0]; ?></div><?php echo $user->user_firstname[0] . ". " . $user->user_lastname; ?></a></li>
-							<li><a href="/">Tableau de bord</a></li>
-							<li><a href="/createForm.php">Créer un QCM</a></li>
-							<li><a href="/logout.php">Déconnexion</a></li>
+							<li><a href="./">Tableau de bord</a></li>
+							<li><a href="./createForm.php">Créer un QCM</a></li>
+							<li><a href="./logout.php">Déconnexion</a></li>
 						</ul>
 
 					</div>

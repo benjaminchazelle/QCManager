@@ -88,7 +88,7 @@ if($v->fieldsExists()) {
 					<input value="Inscription" type="submit">
 				</form>
 			</div>
-			<div class="footer"><a href="login.php">Vous avez déjà un compte ? Connectez-vous !</a></div>
+			<div class="footer"><a href="./login.php">Vous avez déjà un compte ? Connectez-vous !</a></div>
 		</div>
 	</body>
 </html>
