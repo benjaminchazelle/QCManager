@@ -54,6 +54,13 @@ if($error) {
 	
 	<body>
 	
+	<div id="loginmodal" style="display:none;">
+		<h1 id="titlemodal">Lien de partage</h1>
+		<div id="loginform" name="loginform">
+			<input type="text" name="linkmodal" id="username" class="txtfield" onClick="this.select();" value="<?php echo "http://www.qcmanager.tk/form.php?id=" . $_GET["id"]; ?>"  tabindex="1">
+		</div>
+	</div>
+						
 	<div id="maincontainer" class="responsive">
 	
 
@@ -84,15 +91,10 @@ if($error) {
 							<li><a onclick="EditFormController()" href="#">Éditer les infos</a></li>
 							<li><a onclick="AddQuestionController()" href="#">Nouvelle question</a></li>
 							<li><a onclick="ViewStatController()"href="#">Statistiques</a></li>
-							<li><a href="#loginmodal">Partager</a></li>
+							<li><a href="#loginmodal" id="modaltrigger">Partager</a></li>
 						</ul>	
 						<?php } ?>						
-						<div id="loginmodal" style="display:none;">
-							<h1 id="titlemodal">Lien de partage</h1>
-							<form id="loginform" name="loginform">
-								<input type="text" name="linkmodal" id="username" class="txtfield" onClick="this.select();" value="<?php echo "http://www.qcmanager.tk/form.php?id=" + $_GET["id"] + "\""; ?>"  tabindex="1">
-							</form>
-						</div>
+
 					</div>
 				</div>
 			</div>
