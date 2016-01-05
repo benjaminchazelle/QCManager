@@ -238,11 +238,11 @@ body.dragging, body.dragging * {
   z-index: 2000;
 }
 
-ul.example li.placeholder {
+ul.questions_framed li.placeholder {
   position: relative;
   /** More li styles **/
 }
-ul.example li.placeholder:before {
+ul.questions_framed li.placeholder:before {
   position: absolute;
   /** Define arrowhead **/
 }
