@@ -188,14 +188,19 @@ if($v->fieldsExists()) {
 							return n;
 							
 						}
+						
+						function parseDate(d) {
+							return new Date(d.substr(6, 4), d.substr(3, 2) - 1, d.substr(0, 2), d.substr(11, 2), d.substr(14, 2), 0);
+						}
+						
 						jQuery('#startdate').datetimepicker({
 						  format:'d/m/Y H:i',
 						  minDate : new Date(),
 						 
 						  onChangeDateTime: function ( currentDateTime  ) {
 							  
-							  var startdate_selected = new Date(jQuery('#startdate').val());
-							  var enddate_selected = new Date(jQuery('#enddate').val());
+							  var startdate_selected = parseDate(jQuery('#startdate').val());
+							  var enddate_selected = parseDate(jQuery('#enddate').val());
 							  
 							  if(enddate_selected.getTime() < startdate_selected.getTime()) {
 								// alert(currentDateTime.getTime())
@@ -211,7 +216,8 @@ if($v->fieldsExists()) {
 	
 
 						  }
-						});
+						});						
+						
 						
 						jQuery('#enddate').datetimepicker({
 						  format:'d/m/Y H:i',
@@ -237,7 +243,7 @@ if($v->fieldsExists()) {
 							});
 							timeok = true;
 							if($('#startdate').val() != "" && $('#enddate').val() != "") {
-								timeok = ((new Date($('#startdate').val())).getTime() < (new Date($('#enddate').val())).getTime());
+								timeok = ((parseDate($('#startdate').val())).getTime() < (parseDate($('#enddate').val())).getTime());
 								
 								if(!timeok) {
 										$('#startdate, #enddate').addClass("error");
