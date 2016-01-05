@@ -644,3 +644,46 @@ margin-top: 0px; padding-left: 30px;
 	cursor:pointer;
 }
 
+/* modal */
+::selection {  background: #a4dcec;}
+::-moz-selection {  background: #a4dcec;}
+::-webkit-selection {  background: #a4dcec;}
+
+#modaltrigger {
+  font-size: 25px;
+  color: #444;
+}
+
+#titlemodal {
+  color: #2196F3;
+}
+
+#lean_overlay {
+    position: fixed;
+    z-index:100;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    display: none;
+}
+
+#loginmodal {
+  width: 300px;
+  padding: 15px 20px;
+  background: #fff;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.txtfield { 
+  display: block;
+  width: 100%;
+  padding: 6px 5px;
+  margin-bottom: 15px;
+  color: #7988a3;
+  font-size: 1.4em;
+  background-color: #fff;
+  border: 1px solid;
+  border-color: #abbce8 #c3cae0 #b9c8ef;
+}

@@ -84,8 +84,17 @@ if($error) {
 							<li><a onclick="EditFormController()" href="#">Éditer les infos</a></li>
 							<li><a onclick="AddQuestionController()" href="#">Nouvelle question</a></li>
 							<li><a onclick="ViewStatController()"href="#">Statistiques</a></li>
+							<li><a href="#loginmodal" id="modaltrigger">Partager</a></li>
 						</ul>	
 						<?php } ?>
+						
+						<div id="loginmodal" style="display:none;">
+							<h1 id="titlemodal">Lien de partage</h1>
+							<form id="loginform" name="loginform">
+								<input type="text" name="linkmodal" id="username" class="txtfield" onClick="this.select();" value="https://www.google.fr/search?q=modal+javascript&ie=utf-8&oe=utf-8&gws_rd=cr,ssl&ei=oYuLVsPnHcqSad6yn7AC#q=javascript+modal+flat+design"  tabindex="1">
+							</form>
+						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -114,6 +123,15 @@ if($error) {
 	
 	</div>
 	
+	<script type="text/javascript">
+	$(function(){
+	  $('#loginform').submit(function(e){
+		return false;
+	  });
+	  
+	  $('#modaltrigger').leanModal({ top: 110, overlay: 0.45, closeButton: ".hidemodal" });
+	});
+	</script>
 	<script src="js/responsive.js"></script>
 
 	</body>	
