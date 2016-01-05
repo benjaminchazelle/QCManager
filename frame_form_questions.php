@@ -57,10 +57,56 @@ if($error) {
 		<title>QCManager</title>
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 		<script src="js/jquery.min.js"></script>
+		
+		<script src="js/jquery-sortable.js"></script>
+		
+		<script>
+			var adjustment;
+
+			$("ul.questions_framed").sortable({
+			  group: 'questions_framed',
+			  pullPlaceholder: false,
+			  // animation on drop
+			  onDrop: function  ($item, container, _super) {
+				var $clonedItem = $('<li/>').css({height: 0});
+				$item.before($clonedItem);
+				$clonedItem.animate({'height': $item.height()});
+
+				$item.animate($clonedItem.position(), function  () {
+				  $clonedItem.detach();
+				  _super($item, container);
+				});
+			  },
+
+			  // set $item relative to cursor position
+			  onDragStart: function ($item, container, _super) {
+				var offset = $item.offset(),
+					pointer = container.rootGroup.pointer;
+
+				adjustment = {
+				  left: pointer.left - offset.left,
+				  top: pointer.top - offset.top
+				};
+
+				_super($item, container);
+			  },
+			  onDrag: function ($item, position) {
+				$item.css({
+				  left: position.left - adjustment.left,
+				  top: position.top - adjustment.top
+				});
+			  }
+			});
+			
+			$(function  () {
+			  $("ul.questions_framed").sortable();
+			});
+		</script>
+		
 	</head>
 	
-	<body>
-		<ul id="questions_framed">
+	<body style="overflow: hidden;">
+		<ul id="questions_framed" class="questions_framed">
 			<?php
 			
 			$query = '	SELECT *
