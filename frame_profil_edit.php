@@ -101,7 +101,7 @@ $user = Auth::getUser();
 								</fieldset>
 								</td><td>
 								<fieldset class="w50">
-									<legend>École</legend>
+									<legend>Établissement</legend>
 									<input id="enddate" type="text" name="user_schoolname" value="<?php echo $user->user_schoolname; ?>" /><br/>
 								</fieldset>
 								</td>
@@ -116,7 +116,7 @@ $user = Auth::getUser();
 								</fieldset>
 								</td><td>
 								<fieldset class="w50">
-									<legend>Retaper le</legend>
+									<legend>Veuillez retaper le mot de passe</legend>
 									<input id="user_repassword" type="password" name="user_repassword"  /><br/>
 								</fieldset>
 								</td>

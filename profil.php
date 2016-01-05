@@ -56,7 +56,7 @@ $user = Auth::getUser();
 			
 		<div id="onecolumn" class="content">
 			<div id="title">
-				<span>Éditer votre profil</span>
+				<span>Éditer le profil</span>
 
 			</div>
 			<div id="one" >

@@ -45,7 +45,7 @@ if(Validation::Query($_POST, array("email", "password"))) {
 					<input value="Connexion" type="submit">
 				</form>
 			</div>
-			<div class="footer"><a href="register.php">Vous n'avez pas de compte ? Inscrivez vous !</a></div>
+			<div class="footer"><a href="register.php">Vous n'avez pas de compte ? Inscrivez-vous !</a></div>
 		</div>
 	</body>
 </html>

@@ -57,13 +57,13 @@ if($error) {
 						<div id="answerForm">
 							<form action="" method="post" id="statform">
 							<fieldset>
-								<legend>Règle de notation</legend>
+								<legend>Règles de notations</legend>
 								Pour chaque erreur sur la question :
 								<ul id="rules">
-								<li><label><input checked type="radio" name="rule" value="same" />Enlever autant de points qu'une réponse juste</label></li>								
-								<li><label><input type="radio" name="rule" value="middle" />Enlever la moitié des points par rapport à une réponse juste</label></li>								
-								<li><label><input type="radio" name="rule" value="zero" />Enlever tout les points à la question</label></li>
-								<li><label><input type="radio" name="rule" value="all" />N'enlever aucun point à la question</label></li>
+								<li><label><input checked type="radio" name="rule" value="same" />Retirer autant de points qu'une réponse juste</label></li>								
+								<li><label><input type="radio" name="rule" value="middle" />Retirer la moitié des points par rapport à une réponse juste</label></li>								
+								<li><label><input type="radio" name="rule" value="zero" />Retirer tous les points à la question</label></li>
+								<li><label><input type="radio" name="rule" value="all" />Ne retirer aucun point à la question</label></li>
 								<ul>
 							</fieldset>
 							

@@ -19,11 +19,11 @@ $auth = new Auth();
 		<div class="login">
 			<div class="login-top"><span>QCManager</span></div>
 			<h1>Erreur 404 ='(</h1>
-			<h3 style="text-align:justify;">Il semble que cette page n'existe pas ou que vous n'avez pas le droit de l'atteindre.</h3>
+			<h3 style="text-align:justify;">Il semblerait que cette page n'existe pas ou que vous n'avez pas le droit de la visualiser.</h3>
 			<div class="footer">
 			<?php
 			if($auth->isLogged())
-				echo '<a href="index.php">Aller sur la page d\'accueuil</a>';
+				echo '<a href="index.php">Aller sur la page d\'accueil</a>';
 			else
 				echo '<a href="login.php">Connectez-vous</a>';
 			?>
