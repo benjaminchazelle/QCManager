@@ -1,7 +1,7 @@
 <?php
 
-if($_SERVER["SERVER_NAME"] == "other")
-	$_MYSQLI = new mysqli("host", "username", "passwd", "dbname");
+if($_SERVER["SERVER_NAME"] == "webfront.olympe.in")
+	$_MYSQLI = new mysqli("sql2.olympe.in", "msiyjoc5", "kenya777", "msiyjoc5");
 else
 	$_MYSQLI = new mysqli("localhost", "root", "root", "iut_qcmanager");
 
