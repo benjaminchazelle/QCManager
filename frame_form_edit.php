@@ -177,20 +177,48 @@ if($v->fieldsExists()) {
 						</div>
 						
 						<script>
+						
+						function pad(n) {
+							
+							n = n.toString();
+							
+							if(n.length < 2)
+								n = "0" + n;
+							
+							return n;
+							
+						}
 						jQuery('#startdate').datetimepicker({
 						  format:'d/m/Y H:i',
-						  onShow: function ( currentDateTime  ) {
-							 this.setOptions({
-								maxDate:jQuery('#enddate').val()?jQuery('#enddate').val():false
-							   });
+						  minDate : new Date(),
+						 
+						  onChangeDateTime: function ( currentDateTime  ) {
+							  
+							  var startdate_selected = new Date(jQuery('#startdate').val());
+							  var enddate_selected = new Date(jQuery('#enddate').val());
+							  
+							  if(enddate_selected.getTime() < startdate_selected.getTime()) {
+								// alert(currentDateTime.getTime())
+								var correct_enddate = new Date(currentDateTime.getTime()+60*60*1000);
+								
+								// String.format("%08d", iBinary)
+								  
+								var correct_enddate_formated = pad(correct_enddate.getDate())+ "/" + pad(correct_enddate.getMonth()+1) + "/" + correct_enddate.getFullYear() + " " + pad(correct_enddate.getHours()) + ":" + pad(correct_enddate.getMinutes());
+								  
+								jQuery('#enddate').val(correct_enddate_formated);
+							  }
+							  
+	
+
 						  }
 						});
+						
 						jQuery('#enddate').datetimepicker({
 						  format:'d/m/Y H:i',
 						  onShow: function ( currentDateTime  ) {
 							 this.setOptions({
 								minDate:jQuery('#startdate').val()?jQuery('#startdate').val():false
-							   });
+							   })
 						  }
 						});
 						
