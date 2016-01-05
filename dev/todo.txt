@@ -10,6 +10,14 @@ ordonancement question via drag and drop
 
 indice de la question actuelle
 
-notif question répondu ou non
+notif question répondue ou non (petites barres)
 
-countdown
+countdown sur QCM
+
+retour automatique sur "nouvelle question" apres sauvegarde d'une question
+
+date début/fin
+
+bouton QCManager (haut a gauche)
+
+bouton partager en haut a droite du QCM -> popup avec URL
