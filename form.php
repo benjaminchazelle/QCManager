@@ -49,7 +49,7 @@ if($error) {
 		QUESTIONNAIRE_ID = <?php echo $_GET["id"]; ?>;
 		</script>
 		<script src="js/formControllers.js"></script>
-
+		<script type="text/javascript" charset="utf-8" src="js/jquery.leanModal.min.js"></script>
 	</head>
 	
 	<body>
@@ -84,16 +84,15 @@ if($error) {
 							<li><a onclick="EditFormController()" href="#">Éditer les infos</a></li>
 							<li><a onclick="AddQuestionController()" href="#">Nouvelle question</a></li>
 							<li><a onclick="ViewStatController()"href="#">Statistiques</a></li>
-							<li><a href="#loginmodal" id="modaltrigger">Partager</a></li>
+							<li><a href="#loginmodal">Partager</a></li>
 						</ul>	
 						<?php } ?>						
 						<div id="loginmodal" style="display:none;">
 							<h1 id="titlemodal">Lien de partage</h1>
 							<form id="loginform" name="loginform">
-								<input type="text" name="linkmodal" id="username" class="txtfield" onClick="this.select();" value="https://www.google.fr/search?q=modal+javascript&ie=utf-8&oe=utf-8&gws_rd=cr,ssl&ei=oYuLVsPnHcqSad6yn7AC#q=javascript+modal+flat+design"  tabindex="1">
+								<input type="text" name="linkmodal" id="username" class="txtfield" onClick="this.select();" value="<?php echo "http://www.qcmanager.tk/form.php?id=" + $_GET["id"] + "\""; ?>"  tabindex="1">
 							</form>
 						</div>
-						
 					</div>
 				</div>
 			</div>
