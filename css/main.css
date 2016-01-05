@@ -22,7 +22,7 @@
   font-weight: 700;
   src: local('Karla Bold Italic'), local('Karla-BoldItalic'), url(../font/KarlaBoldItalic.woff2) format('woff2');
 }
-
+ 
 body {
 	margin:0;
 	font-family: 'Karla', sans-serif;

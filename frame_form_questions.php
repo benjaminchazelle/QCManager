@@ -16,7 +16,7 @@ function littleCasify($str) {
 	return trim($str);
 	
 }
-	
+
 $auth = new Auth(true);
 
 $error = true;
