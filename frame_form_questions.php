@@ -56,56 +56,39 @@ if($error) {
 		<meta charset="utf-8" />
 		<title>QCManager</title>
 		<link rel="stylesheet" type="text/css" href="css/main.css">
-		<script src="js/jquery.min.js"></script>
 		
+		<script src="js/jquery.min.js"></script>
 		<script src="js/jquery-sortable.js"></script>
 		
+		<?php if($data["questionnaire"]->own) { ?>
 		<script>
 			var adjustment;
 
-			$("ul.questions_framed").sortable({
-			  group: 'questions_framed',
-			  pullPlaceholder: false,
-			  // animation on drop
-			  onDrop: function  ($item, container, _super) {
-				var $clonedItem = $('<li/>').css({height: 0});
-				$item.before($clonedItem);
-				$clonedItem.animate({'height': $item.height()});
-
-				$item.animate($clonedItem.position(), function  () {
-				  $clonedItem.detach();
-				  _super($item, container);
-				});
-			  },
-
-			  // set $item relative to cursor position
-			  onDragStart: function ($item, container, _super) {
-				var offset = $item.offset(),
-					pointer = container.rootGroup.pointer;
-
-				adjustment = {
-				  left: pointer.left - offset.left,
-				  top: pointer.top - offset.top
-				};
-
-				_super($item, container);
-			  },
-			  onDrag: function ($item, position) {
-				$item.css({
-				  left: position.left - adjustment.left,
-				  top: position.top - adjustment.top
-				});
-			  }
+			$(function  () {
+			  $("ul.questions_framed").sortable({onDrop : function ($item, container, _super, event) {
+				  $item.removeClass(container.group.options.draggedClass).removeAttr("style")
+				  $("body").removeClass(container.group.options.bodyClass)
+				  
+				  var uls = document.getElementById("questions_framed").children;
+				  var ids = [];
+				  for(var i=0;i<uls.length;i++) {
+					  
+					  ids.push(uls.item(i).id);
+					  
+				  }
+				  
+				  $.post("ajax/setQuestionOrder.php", { questionnaire_id: <?php echo $_GET["id"]; ?>, questions_order: ids.join("|")} );
+				  
+				}});
 			});
 			
-			$(function  () {
-			  $("ul.questions_framed").sortable();
-			});
+			
 		</script>
+		<?php } ?>
 		
 	</head>
 	
-	<body style="overflow: hidden;">
+	<body style="overflow-x: hidden;">
 		<ul id="questions_framed" class="questions_framed">
 			<?php
 			
