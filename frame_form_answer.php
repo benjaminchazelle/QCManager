@@ -169,7 +169,9 @@ if($own && Validation::Query($_POST, array("indexes", "correct_indexes", "labels
 	
 	// echo $q;
 	
-	header("Location: frame_form_answer.php?refresh=true&id=".$_GET["id"]);
+	$new = $new ? 1 : 0;
+	
+	header("Location: frame_form_answer.php?new=".$new."&refresh=true&id=".$_GET["id"]);
 	exit;
 	}
 
@@ -207,7 +209,6 @@ else if(!$own && Validation::Query($_POST, array("post")) && $data["question"]->
 	 
 
 }
-
 
 
 		
@@ -407,10 +408,15 @@ else if(!$own && Validation::Query($_POST, array("post")) && $data["question"]->
 					else
 						echo 'Ce QCM est désormais terminé';
 					
+					if(isset($_POST["post"]))
+						echo '<script>parent.toastAnswer();</script>';
+					
 					} ?>
 				</div>
 			</div>
 			
+
+
 		<script>
 		
 		parent.InitAnswerFrameController(window);
@@ -432,7 +438,11 @@ else if(!$own && Validation::Query($_POST, array("post")) && $data["question"]->
 
 		});
 		
-		<?php if(isset($_GET["refresh"])) echo 'parent.RefreshQuestionsFrameController();'; ?>
+		
+
+		<?php $pastNew = (isset($_GET['new'])) ? "true" : "false";   ?>		
+		<?php if(isset($_GET["refresh"])) echo 'parent.RefreshQuestionsFrameController('.$pastNew.');'; ?>
+		
 		</script>
 	</body>
 	

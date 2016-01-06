@@ -26,6 +26,10 @@ if(Validation::Query($_GET, array("id")) && is_numeric($_GET["id"])) {
 
 		$data["questionnaire"]->own = $own;
 		
+		if(!$own && !($questionnaire->questionnaire_start_date < time() && time () < $questionnaire->questionnaire_end_date)) {
+			$error = true;
+		}
+		
 	}
 	
 	
@@ -122,6 +126,9 @@ if($error) {
 		</div>
 	
 	</div>
+	
+	<div id="toast_form" class="toast">Le questionnaire a été mis à jour</div>
+	<div id="toast_answer" class="toast">Vos réponses ont été enregistrées</div>
 	
 	<script type="text/javascript">
 	$(function(){

@@ -59,14 +59,24 @@ function AddQuestionController() {
 }
 
 
-function RefreshQuestionsFrameController() {
+function RefreshQuestionsFrameController(isNew) {
+	
+	console.log(isNew)
+	
 	document.getElementById("questionsFrame").src += "&noRefresh=true";
+	
+	if(isNew)
+		AddQuestionController();
+	
+	toastForm();
+	
 	//window.location.href
 }
 
 function EditFormController() {
 
 	document.getElementById("answerFrame").src = "frame_form_edit.php?id=" + QUESTIONNAIRE_ID;
+	
 }
 
 function ViewStatController() {
@@ -81,13 +91,25 @@ function UpdateFormController(data) {
 	document.getElementById("description").textContent = data.questionnaire_description;
 	document.getElementById("time").textContent = "Fin: " + data.questionnaire_end_date;
 	
-	//date de fin
+	toastForm();
 }
 
+function toastForm() {
+
+	$("#toast_answer").hide();
+	$("#toast_form").show().animate({opacity:1}).delay(3000).animate({opacity:0}, function() {$(this).hide();});
+	
+}
+
+function toastAnswer() {
+
+	$("#toast_form").hide();
+	$("#toast_answer").show().animate({opacity:1}).delay(3000).animate({opacity:0}, function() {$(this).hide();});
+	
+}
 
 window.onload = function () {
 	
 	
 	document.getElementById("searchterm").onkeyup = QuestionSearchController;
-	
 };
