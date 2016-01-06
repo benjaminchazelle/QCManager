@@ -710,3 +710,16 @@ ul.example li.placeholder:before {
   position: absolute;
   /** Define arrowhead **/
 }
+
+.toast {
+	background: #2196f3;
+	color:white;
+	position:fixed;
+	bottom:20px;
+	left:20px;
+	padding:15px 20px;
+	font-weight:bold;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+	opacity: 0;
+	display: none;
+}
