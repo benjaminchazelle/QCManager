@@ -27,6 +27,7 @@ if(Validation::Query($_GET, array("id")) && is_numeric($_GET["id"])) {
 		$data["questionnaire"]->questionnaire_description = "";
 		$data["questionnaire"]->questionnaire_start_date = time();
 		$data["questionnaire"]->questionnaire_end_date = time()+60*60*24;
+		$data["questionnaire"]->questionnaire_notation_rule = 0;
 	
 		
 		

@@ -85,7 +85,7 @@ if($error) {
 			$("#rules input").click(function() {
 				rule = $(this).val();
 				
-				$.getJSON("ajax/getForm.php?questionnaire_id=<?php echo $_GET["id"]; ?>", function (json) {
+				$.getJSON("ajax/getForm.php?questionnaire_id=<?php echo $_GET["id"]; ?>&rule="+rule, function (json) {
 					
 					if(!json.error) {
 						

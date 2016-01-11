@@ -30,6 +30,7 @@ CREATE TABLE questionnaire
     questionnaire_description TEXT NOT NULL,
     questionnaire_start_date INTEGER UNSIGNED NOT NULL,
     questionnaire_end_date INTEGER UNSIGNED NOT NULL,
+	questionnaire_notation_rule INTEGER UNSIGNED NOT NULL,
     PRIMARY KEY (questionnaire_id),
     FOREIGN KEY (questionnaire_user_id) REFERENCES user(user_id) ON DELETE CASCADE
 );
