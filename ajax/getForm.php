@@ -11,9 +11,16 @@ $auth = new Auth();
 
 $ajax = new Ajax();
 
+$correspondance = array("same" => 0, "middle" => 1, "zero" => 2, "all" => 3);
+		
 if($auth->isLogged()) {
 	
-	if(Validation::Query($_GET, array("questionnaire_id"))) {
+	if(Validation::Query($_GET, array("questionnaire_id", "rule")) && isset($correspondance[$_GET["rule"]])) {
+		
+		// $q = 'UPDATE questionnaire SET questionnaire_notation_rule = '.$correspondance[$_GET["rule"]].' WHERE questionnaire_id  = "'.$_MYSQLI->real_escape_string($_GET["questionnaire_id"]).'"';
+		// echo $q;
+		
+		$_MYSQLI->query('UPDATE questionnaire SET questionnaire_notation_rule = '.$correspondance[$_GET["rule"]].' WHERE questionnaire_id  = "'.$_MYSQLI->real_escape_string($_GET["questionnaire_id"]).'"');
 		
 		$questionnaire_result = $_MYSQLI->query('SELECT * FROM questionnaire WHERE questionnaire_id  = "'.$_MYSQLI->real_escape_string($_GET["questionnaire_id"]).'" LIMIT 1');
 		
