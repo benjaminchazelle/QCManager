@@ -106,7 +106,7 @@ if($error) {
 				if($first == null)
 					$first = $question->question_id;
 				
-				echo '<li id="'.$question->question_id.'" onclick="parent.QuestionSelectQuestionController(this)" name="'.littleCasify(($question->question_content)).'">'.($question->question_content).'</li>'."\n";
+				echo '<li id="'.$question->question_id.'" onclick="parent.QuestionSelectQuestionController(this)" name="'.littleCasify(($question->question_content)).'"><div class="marker">'.($question->question_content).'</div></li>'."\n";
 				
 			}
 			?>
