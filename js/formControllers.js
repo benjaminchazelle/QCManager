@@ -79,6 +79,12 @@ function EditFormController() {
 	
 }
 
+function AskController() {
+	
+	//TODO
+	parent.toastAnswer();
+}
+
 function ViewStatController() {
 	document.getElementById("answerFrame").src = "frame_form_stat.php?id=" + QUESTIONNAIRE_ID;
 	
