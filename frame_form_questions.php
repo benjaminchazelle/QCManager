@@ -143,8 +143,10 @@ if($error) {
 		<script>
 			parent.InitQuestionsFrameController(window);
 			
+			<?php if($first != null) { ?>
 			if(window.location.search.indexOf("noRefresh") == -1)
 				parent.QuestionSelectQuestionController(document.getElementById(<?php echo $first; ?>));
+			<?php } ?>
 		</script>
 	</body>
 	
