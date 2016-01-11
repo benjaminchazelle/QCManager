@@ -3,9 +3,6 @@ upload img profil
 
 indice de la question actuelle
 
-notif question répondue ou non (petites barres)
+notif question rÃ©pondue ou non (petites barres)
 
 countdown sur QCM
-
-bouton QCManager (haut a gauche)
-

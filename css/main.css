@@ -723,3 +723,13 @@ ul.example li.placeholder:before {
 	opacity: 0;
 	display: none;
 }
+
+.marker{
+	border-top-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
+    border-left-style: solid;
+	border-width: 4px;
+	border-color: #2ecc71;
+	padding-left: 5px;
+}
