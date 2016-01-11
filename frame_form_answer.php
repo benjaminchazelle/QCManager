@@ -19,7 +19,7 @@ if(Validation::Query($_GET, array("id", "qid")) && $_GET["id"] == -1) {
 
 	$q = '	SELECT questionnaire.*, COUNT(question_id) AS questionnaire_total_questions
 				FROM questionnaire 
-				INNER JOIN question ON questionnaire_id = question_questionnaire_id
+				LEFT JOIN question ON questionnaire_id = question_questionnaire_id
 				WHERE questionnaire_id = '.$_MYSQLI->real_escape_string($_GET["qid"]).'
 				LIMIT 1';
 	
