@@ -96,17 +96,45 @@ if($error) {
 						FROM question q
 						WHERE question_questionnaire_id = '.$_GET["id"].'
 						ORDER BY question_num ASC, question_id ASC';
+						
+			$second_query = 'SELECT DISTINCT q.question_id
+							FROM question q 
+							INNER JOIN choice c
+							ON q.question_id = c.choice_question_id
+							INNER JOIN answer a
+							on a.answer_choice_id = c.choice_id
+							WHERE question_questionnaire_id ='.$_GET["id"].' 
+							AND a.answer_student_user_id ='.Auth::getUserId().'
+							ORDER BY question_num ASC, question_id ASC ';
 			
 			$questions_result = $_MYSQLI->query($query);
-			
 			$first = null;
+			
+			$questions_query_answered = $_MYSQLI->query($second_query);
+			$res = $questions_query_answered->fetch_all();
+			
+			//var_dump($res);
 			
 			while($question = $questions_result->fetch_object()) {
 				
 				if($first == null)
 					$first = $question->question_id;
 				
-				echo '<li id="'.$question->question_id.'" onclick="parent.QuestionSelectQuestionController(this)" name="'.littleCasify(($question->question_content)).'"><div class="marker">'.($question->question_content).'</div></li>'."\n";
+				$founded = false;
+				for($i = 0 ; $i < count($res) ; $i++)
+				{
+					//echo '>'.$res[$i][0].'<';
+					if($res[$i][0] == $question->question_id)
+					{
+						$founded = true;
+						break;
+					}
+				}
+				
+				if(!$founded)
+					echo '<li id="'.$question->question_id.'" onclick="parent.QuestionSelectQuestionController(this)" name="'.littleCasify(($question->question_content)).'">'.($question->question_content).'</li>'."\n";
+				else
+					echo '<li id="'.$question->question_id.'" onclick="parent.QuestionSelectQuestionController(this)" name="'.littleCasify(($question->question_content)).'"><div class="marker">'.($question->question_content).'</div></li>'."\n";
 				
 			}
 			?>
