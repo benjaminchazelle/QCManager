@@ -85,9 +85,8 @@ if($error) {
 				</div>
 			</div>
 		<script>
-			rule = "middle";
-			$("#rules input").click(function() {
-				rule = $(this).val();
+
+				rule = $("#rules input:checked").val();
 				
 				$.getJSON("ajax/getForm.php?questionnaire_id=<?php echo $_GET["id"]; ?>&rule="+rule, function (json) {
 					
@@ -165,9 +164,9 @@ if($error) {
 						
 					}
 				});
-			});
 			
-			$("#rules input").get(<?php echo $questionnaire->questionnaire_notation_rule; ?>).click();
+			
+			
 
 		</script>
 	</body>
