@@ -54,6 +54,14 @@ if($v->fieldsExists()) {
 
 $user = Auth::getUser();
 
+$other_query_photo = 'SELECT user_photo_path
+				FROM user
+				WHERE user_id = '.Auth::getUserId();
+
+
+$other_result_photo = $_MYSQLI->query($other_query_photo);
+
+$row = $other_result_photo->fetch_object();
 	
 ?>
 <!DOCTYPE html>
@@ -75,7 +83,14 @@ $user = Auth::getUser();
 		<div id="loginmodal" style="display:none;">
 			<h1 id="titlemodal">Uploader une image</h1>
 			<div id="loginform" name="loginform">
-				<input type="file" name="file_sent">
+				
+				<form id="uploadForm" enctype="multipart/form-data" action="ajax/uploadPicture.php" target="uploadFrame" method="post">
+					
+					<input onchange="document.getElementById('uploadForm').submit();location.reload();" type="file" name="file" />
+					
+				</form>
+				
+				<iframe name="uploadFrame" id="uploadFrame" src="" style="display:none;" /></iframe>
 			</div>
 		</div>
 		
@@ -84,7 +99,11 @@ $user = Auth::getUser();
 
 					<img id="loader" src="media/static/loader.gif" alt="" style="display:none;margin-top:10px;" />
 					
-					<a id="modaltrigger" href="#loginmodal"><div id="profilimgedit"><?php echo $user->user_lastname[0]; ?></div></a>	
+					<?php if(!isset($row->user_photo_path))
+						echo "<a id='modaltrigger' href='#loginmodal'><div id='profilimgedit'><?php echo $user->user_lastname[0]; ?></div></a>";
+					else
+						echo "<img src='$row->user_photo_path'>";
+					?>
 					
 					
 					<div id="answerForm">
