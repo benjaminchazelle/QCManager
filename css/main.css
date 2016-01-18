@@ -261,9 +261,27 @@ hr {
 	display:inline-block;
 	color: white;
 	background:#90a4ae ;
-	/*font-family: Comic Sans MS;*/
 	text-align:center;
 	margin-right:5px;
+}
+
+#profilimgedit {
+    line-height: 128px;
+    height: 128px;
+    width: 128px;
+	font-size:100px;
+    border-radius: 128px;
+	display:inline-block;
+	color: white;
+	background:#90a4ae ;
+	text-align:center;
+	margin-right:5px;
+	
+}
+
+#profilimgedit:hover {
+	background:#666666;
+	cursor:hand;
 }
 
 
