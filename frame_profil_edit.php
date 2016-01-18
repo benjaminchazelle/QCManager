@@ -53,6 +53,7 @@ if($v->fieldsExists()) {
 	}
 
 $user = Auth::getUser();
+/*
 
 $other_query_photo = 'SELECT user_photo_path
 				FROM user
@@ -61,7 +62,7 @@ $other_query_photo = 'SELECT user_photo_path
 
 $other_result_photo = $_MYSQLI->query($other_query_photo);
 
-$row = $other_result_photo->fetch_object();
+$row = $other_result_photo->fetch_object();*/
 	
 ?>
 <!DOCTYPE html>
@@ -84,11 +85,14 @@ $row = $other_result_photo->fetch_object();
 			<h1 id="titlemodal">Uploader une image</h1>
 			<div id="loginform" name="loginform">
 				
-				<form id="uploadForm" enctype="multipart/form-data" action="ajax/uploadPicture.php" target="uploadFrame" method="post">
+				<form id="uploadForm" enctype="multipart/form-data" action="frame_upload_picture.php" target="uploadFrame" method="post">
 					
-					<input onchange="document.getElementById('uploadForm').submit();location.reload();" type="file" name="file" />
+					<input onchange="document.getElementById('uploadForm').submit();" type="file" name="file" />
 					
 				</form>
+				
+				<hr/>
+				<i>Limite de taille : <?php echo min((int) ini_get('post_max_size'), (int) ini_get('upload_max_filesize')); ?> Mo</i>
 				
 				<iframe name="uploadFrame" id="uploadFrame" src="" style="display:none;" /></iframe>
 			</div>
@@ -99,10 +103,11 @@ $row = $other_result_photo->fetch_object();
 
 					<img id="loader" src="media/static/loader.gif" alt="" style="display:none;margin-top:10px;" />
 					
-					<?php if(!isset($row->user_photo_path))
-						echo "<a id='modaltrigger' href='#loginmodal'><div id='profilimgedit'><?php echo $user->user_lastname[0]; ?></div></a>";
+					<?php 
+					if(empty($user->user_photo_path))
+						echo "<a id='modaltrigger' href='#loginmodal'><div id='profilimgedit'>".$user->user_lastname[0]."</div></a>";
 					else
-						echo "<img src='$row->user_photo_path'>";
+						echo "<img src='$user->user_photo_path'>";
 					?>
 					
 					
