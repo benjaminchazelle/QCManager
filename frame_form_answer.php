@@ -409,7 +409,7 @@ else if(!$own && Validation::Query($_POST, array("post")) && $data["question"]->
 						echo 'Ce QCM est désormais terminé';
 					
 					if(isset($_POST["post"]))
-						echo '<script>parent.AskController();</script>';
+						echo '<script>parent.AskController('.$_GET['id'].');</script>';
 					
 					} ?>
 				</div>

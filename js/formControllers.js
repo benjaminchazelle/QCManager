@@ -79,9 +79,20 @@ function EditFormController() {
 	
 }
 
-function AskController() {
+function AskController(id) {
+
+	if(questionsFrame == null) return;
 	
-	//TODO
+	
+	if(questionsFrame.document.getElementById(id))
+		{
+		var html = questionsFrame.document.getElementById(id).innerHTML;
+		
+		if(html.substring(0,4) != "<div")
+			 questionsFrame.document.getElementById(id).innerHTML = '<div class="marker">' + html + '</div>';
+		}
+
+	
 	parent.toastAnswer();
 }
 
