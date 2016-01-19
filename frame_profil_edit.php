@@ -107,7 +107,7 @@ $row = $other_result_photo->fetch_object();*/
 					if(empty($user->user_photo_path))
 						echo "<a id='modaltrigger' href='#loginmodal'><div id='profilimgedit'>".$user->user_lastname[0]."</div></a>";
 					else
-						echo "<img src='$user->user_photo_path'>";
+						echo "<a id='modaltrigger' href='#loginmodal'><div class='roundedImageedit' id='profilimgedit'><img src='$user->user_photo_path'> </div></a>";
 					?>
 					
 					

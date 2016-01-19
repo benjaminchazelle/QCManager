@@ -40,7 +40,17 @@ $user = Auth::getUser();
 				<div id="menu_items">
 					<div class="padder">
 						<ul>
-							<li><a id="profilitem" href="./profil.php"><div id="profilimg"><?php echo $user->user_lastname[0]; ?></div><?php echo $user->user_firstname[0] . ". " . $user->user_lastname; ?></a></li>
+							<li>
+								<a id="profilitem" href="./profil.php">
+									<?php 
+									if(empty($user->user_photo_path))
+										echo "<div id='profilimg'>".$user->user_lastname[0]."</div>".$user->user_firstname[0] . ". " . $user->user_lastname;
+									else
+										echo "<div class='roundedImage' id='profilimg'><img src='$user->user_photo_path'></div>".$user->user_firstname[0] . ". " . $user->user_lastname;
+									?>
+								</a>
+							</li>
+							<!--<li><a id="profilitem" href="./profil.php"><div id="profilimg"><?php echo $user->user_lastname[0]; ?></div><?php echo $user->user_firstname[0] . ". " . $user->user_lastname; ?></a></li>-->
 							<li><a href="./">Tableau de bord</a></li>
 							<li><a href="./createForm.php">Créer un QCM</a></li>
 							<li><a href="./logout.php">Déconnexion</a></li>
