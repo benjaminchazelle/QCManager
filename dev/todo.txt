@@ -1,8 +1,0 @@
-
-upload img profil
-
-indice de la question actuelle
-
-notif question répondue ou non (petites barres)
-
-countdown sur QCM

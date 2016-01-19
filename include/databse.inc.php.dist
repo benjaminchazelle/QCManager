@@ -1,0 +1,10 @@
+<?php
+
+$_MYSQLI = new mysqli("localhost", "root", "root", "iut_qcmanager");
+
+if ($_MYSQLI->connect_errno) {
+	printf("Échec de la connexion : %s\n", $_MYSQLI->connect_error);
+	exit();
+}
+
+?>
