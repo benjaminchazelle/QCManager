@@ -33,7 +33,7 @@ if($auth->isLogged()) {
 			$mine_query = "UPDATE user SET user_photo_path = '".$new_filename."' WHERE user_id = " . Auth::getUserId();
 			$mine_result = $_MYSQLI->query($mine_query);
 			
-			echo "parent.location.href = parent.location.href";
+			echo "parent.parent.location.href = parent.parent.location.href";
 
 		}
 		else {

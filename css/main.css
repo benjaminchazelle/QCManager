@@ -788,3 +788,21 @@ ul.example li.placeholder:before {
 	border-color: #2196f3;
 	padding-left: 5px;
 }
+
+#pickcontrol {
+	
+	opacity: 0;
+	background: rgba(0, 0, 0, 0.8) none repeat scroll 0 0;
+    font-size: 15px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+	transition: opacity 0.4s;
+	
+}
+
+#pickcontrol:hover {
+	
+	opacity: 1;
+	
+}
