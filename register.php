@@ -79,7 +79,7 @@ if($v->fieldsExists()) {
 			<div class="label"><?php echo $error; ?></div>
 			<div class="login-bottom">
 				<form method="post">
-					<input name="user_firstname" <?php if($v->fail("user_firstname")) echo 'class="error"'; ?> placeholder="Nom" type="text">
+					<input autofocus name="user_firstname" <?php if($v->fail("user_firstname")) echo 'class="error"'; ?> placeholder="Nom" type="text">
 					<input name="user_lastname" <?php if($v->fail("user_lastname")) echo 'class="error"'; ?> placeholder="Prénom" type="text">
 					<input name="user_email" <?php if($v->fail("user_email") || !$email_available) echo 'class="error"'; ?> placeholder="Adresse e-mail" type="text">
 					<input name="user_schoolname" <?php if($v->fail("user_schoolname")) echo 'class="error"'; ?> placeholder="Établissement" type="text">

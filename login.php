@@ -40,8 +40,8 @@ if(Validation::Query($_POST, array("email", "password"))) {
 			<?php if($error) echo '<div class="label">La connexion a échouée</div>'; ?>
 			<div class="login-bottom">
 				<form method="post">
-					<input placeholder="Adresse e-mail" type="text" name="email" />					
-					<input class="password" autofocus placeholder="Mot de passe" type="password" name="password" />						
+					<input autofocus placeholder="Adresse e-mail" type="text" name="email" />					
+					<input class="password" placeholder="Mot de passe" type="password" name="password" />						
 					<input value="Connexion" type="submit">
 				</form>
 			</div>
